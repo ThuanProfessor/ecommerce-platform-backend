@@ -109,7 +109,8 @@ This project is licensed under multiple open source licenses:
 ## 📞 Support
 
 For support and inquiries, please contact:
-- 📧 Email: [beanheo2014@gmail.com](mailto:beanheo2014@gmail.com)
+- 📧 Email: [2251050029hau@ou.edu.vn](mailto:2251050029hau@ou.edu.vn)
+- 📧 Email: [hoangthuandev04@gmail.com](mailto:hoangthuandev04@gmail.com)
 - 💬 Issues: [GitHub Issues](https://github.com/ThuanProfessor/ecommerce-platform-backend/issues)
 
 
