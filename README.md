@@ -76,7 +76,7 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
 1. Clone the repository:
 ```bash
 git clone https://github.com/ThuanProfessor/ecommerce-platform-backend.git
-cd digital-marketplace-backend
+cd ecommerce-platform-backend
 ```
 
 ## 👥 Contributors
