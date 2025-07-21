@@ -1,0 +1,5 @@
+com\htw\ecommerceplatform\HibernateConfigs.class
+com\htw\repositories\impl\ProductRepositotyImpl.class
+com\htw\pojo\Category.class
+com\htw\repositories\impl\CategoryRepositoryImpl.class
+com\htw\pojo\Product.class
