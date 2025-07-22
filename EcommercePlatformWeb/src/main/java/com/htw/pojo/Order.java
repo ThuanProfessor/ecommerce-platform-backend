@@ -31,10 +31,10 @@ import java.util.Set;
 @Entity
 @Table(name = "order")
 @NamedQueries({
-    @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o"),
-    @NamedQuery(name = "Order1.findById", query = "SELECT o FROM Order1 o WHERE o.id = :id"),
-    @NamedQuery(name = "Order1.findByCreatedDate", query = "SELECT o FROM Order1 o WHERE o.createdDate = :createdDate"),
-    @NamedQuery(name = "Order1.findByNote", query = "SELECT o FROM Order1 o WHERE o.note = :note")})
+    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o"),
+    @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.id = :id"),
+    @NamedQuery(name = "Order.findByCreatedDate", query = "SELECT o FROM Order o WHERE o.createdDate = :createdDate"),
+    @NamedQuery(name = "Order.findByNote", query = "SELECT o FROM Order o WHERE o.note = :note")})
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -139,7 +139,7 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "com.htw.pojo.Order1[ id=" + id + " ]";
+        return "com.htw.pojo.Order[ id=" + id + " ]";
     }
     
 }

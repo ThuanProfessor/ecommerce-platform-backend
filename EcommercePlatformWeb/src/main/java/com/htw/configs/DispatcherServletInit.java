@@ -4,10 +4,32 @@
  */
 package com.htw.configs;
 
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 /**
  *
  * @author nguye
  */
-public class DispatcherServletInit {
+public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[] {
+            ThymeleafConfigs.class,
+            HibernateConfigs.class
+        };
+}
+
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class[]{
+            WebAppContextConfigs.class
+        };
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] {"/"};
+    }
     
 }

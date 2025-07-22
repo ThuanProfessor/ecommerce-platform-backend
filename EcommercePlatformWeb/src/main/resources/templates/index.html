@@ -1,0 +1,17 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Ecommerce Platform</title>
+    </head>
+    
+    <body>
+        <h1>Ecommerce Platform</h1>
+        <h1 th:text="${msg}"></h1>
+        
+        <ul>
+            <li th:each="c: ${categories}" th:text="${c.name}"></li>
+        </ul>
+    </body>
+    
+    
+</html>
