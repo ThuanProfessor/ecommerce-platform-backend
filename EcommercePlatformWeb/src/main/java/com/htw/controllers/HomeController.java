@@ -5,6 +5,7 @@
 package com.htw.controllers;
 
 import com.htw.pojo.Category;
+import com.htw.services.CategoryService;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author nguye
  */
 @Controller
-@Transactional
 public class HomeController {
-    @Autowired
-    private LocalSessionFactoryBean factory;
-    
-    
+    private CategoryService cateService;
+
     @RequestMapping("/")
-    public String index(Model model){
+    @Transactional
+    public String index(Model model) {
         model.addAttribute("msg", "He Thong Web");
-        
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Category", Category.class);
-        
-        model.addAttribute("categories", q.getResultList());
-        
+
+        // Session s = this.factory.getObject().getCurrentSession();
+        // Query q = s.createQuery("FROM Category", Category.class);
+        //
+        // model.addAttribute("categories", q.getResultList());
+
         return "index";
     }
 }

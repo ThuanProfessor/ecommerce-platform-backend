@@ -29,8 +29,7 @@ public class HibernateConfigs {
 
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
-        LocalSessionFactoryBean sessionFactory
-                = new LocalSessionFactoryBean();
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 
         sessionFactory.setPackagesToScan(new String[]{
             "com.htw.pojo"
