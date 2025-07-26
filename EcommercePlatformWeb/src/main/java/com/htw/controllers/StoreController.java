@@ -24,6 +24,6 @@ public class StoreController {
     @GetMapping("")
     public String listStore(Model model){
         model.addAttribute("stores", storeService.getStores());
-        return "index";
+        return "store-list";
     }
 }
