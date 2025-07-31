@@ -1,6 +1,15 @@
 C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\ecommerceplatform\EcommercePlatform.java
 C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\ecommerceplatform\HibernateConfigs.java
 C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Category.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Company.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Order.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\OrderDetail.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Payment.java
 C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Product.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Review.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\Store.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\pojo\User.java
 C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\repositories\impl\CategoryRepositoryImpl.java
 C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\repositories\impl\ProductRepositotyImpl.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\repositories\impl\StatsRepositoryImpl.java
+C:\Users\nguye\OneDrive\Documents\my-project\ecommerce-platform-backend\EcommercePlatform\src\main\java\com\htw\repositories\impl\UserRepositoryImpl.java

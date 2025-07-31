@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Sản phẩm</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+<body>
+
+    <div th:replace="base :: header"></div>  
+
+    <div class="container text-center">
+        <h1 class="mt-2">QUẢN LÝ SẢN PHẨM</h1>
+        <p>Bạn có thể thêm sản phẩm mới hoặc chỉnh sửa thông tin của sản phẩm</p>
+
+        
+
+        <form th:action="@{/products}">
+            <div class="mb-3 mt-3">
+                <input type="text" class="form-control" name="kw" placeholder="Nhập sản phẩm cần tìm..." />
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3 mt-3">
+                        <input type="text" class="form-control" name="fromPrice" placeholder="Giá từ" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3 mt-3">
+                        <input type="text" class="form-control" name="toPrice" placeholder="Đến" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <button class="btn btn-info" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+
+        <div class="container mt-4">
+            <div id="content">
+                <div th:if="${products}" class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ảnh sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Mô tả</th>
+                                <th>Giá</th>
+                                <th>Ngày tạo</th>
+                                <th>Kích hoạt</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="product : ${products}">
+                                <td>
+                                    <img th:src="${product.image}" class="rounded" width="80" alt="Ảnh sản phẩm"/>
+                                </td>
+                                <td th:text="${product.name}"></td>
+                                <td th:text="${product.description}"></td>
+                                <td th:text="${product.price} + ' VNĐ'"></td>
+                                <td th:text="${#dates.format(product.createdDate, 'dd-MM-yyyy')}"></td>
+                                <td class="text-center" th:text="${product.active} ? '✅' : '❌' "></td>
+                                <td>
+                                    <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Edit</a>
+                                    <a th:href="@{/stores/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+            <a th:href="@{/products/add}" class="btn btn-success mt-2">➕ Thêm sản phẩm</a>
+        </div>
+    </div>
+
+
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>

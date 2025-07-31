@@ -2,13 +2,14 @@ package com.htw.repositories.impl;
 
 
 import com.htw.ecommerceplatform.HibernateConfigs;
-import com.htw.pojo.Order;
+
 import com.htw.pojo.OrderDetail;
 import com.htw.pojo.Product;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 

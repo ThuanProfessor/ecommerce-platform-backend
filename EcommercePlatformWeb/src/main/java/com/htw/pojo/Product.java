@@ -20,10 +20,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -48,22 +52,24 @@ public class Product implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Column(name = "price")
     private BigDecimal price;
-    @Basic(optional = false)
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
     @Column(name = "active")
-    private boolean active;
-    @Basic(optional = false)
+    private Boolean active;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -74,6 +80,9 @@ public class Product implements Serializable {
     private Set<Review> reviewSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private Set<OrderDetail> orderDetailSet;
+    
+    @Transient
+    private MultipartFile file;
 
     public Product() {
     }
@@ -82,13 +91,10 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, String name, BigDecimal price, String image, boolean active, Date createdDate) {
+    public Product(Integer id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.image = image;
-        this.active = active;
-        this.createdDate = createdDate;
     }
 
     public Integer getId() {
@@ -131,11 +137,11 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public boolean getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -194,6 +200,20 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "com.htw.pojo.Product[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

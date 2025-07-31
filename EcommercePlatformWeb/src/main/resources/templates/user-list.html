@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Danh sách người dùng</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+  </head>
+  <body>
+    <div th:replace="base :: header"></div>
+    <div class="container mt-4">
+      <h2>Danh sách người dùng</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên đăng nhập</th>
+            <th>Họ và tên</th>
+            <th>Số điện thoại</th>
+            <th>Vai trò</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.fullName}"></td>
+            <td th:text="${user.numberPhone}"></td>
+            <td th:text="${user.role}"></td>
+
+            <td>
+              <a th:href="@{/user/{id}(id=${user.id})}" class="btn btn-primary">Edit</a>
+              <a th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div th:replace="base :: footer"></div>
+  </body>
+</html>

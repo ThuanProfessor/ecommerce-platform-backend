@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Danh sách đơn hàng</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div class="container mt-4">
+        <h2>Danh sách đơn hàng</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ngày tạo</th>
+                    <th>Ghi chú</th>
+                    <th>Người dùng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td
+                        th:text="${#dates.format(order.createdDate, 'dd-MM-yyyy')}"
+                        ></td>
+                    <td th:text="${order.note}"></td>
+                    <td th:text="${order.userId.fullName}"></td>
+
+                    <td>
+                        <a th:href="@{/order/{id}(id=${order.id})}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/order/delete/{id}(id=${order.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <div th:replace="base :: footer"></div>
+
+
+</body>
+</html>

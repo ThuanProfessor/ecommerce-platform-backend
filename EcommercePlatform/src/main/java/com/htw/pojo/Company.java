@@ -41,13 +41,10 @@ public class Company implements Serializable {
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
     @Column(name = "avatar")
     private String avatar;
-    @Basic(optional = false)
     @Column(name = "tax")
     private String tax;
-    @Basic(optional = false)
     @Column(name = "type")
     private String type;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -61,12 +58,9 @@ public class Company implements Serializable {
         this.id = id;
     }
 
-    public Company(Integer id, String name, String avatar, String tax, String type) {
+    public Company(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.avatar = avatar;
-        this.tax = tax;
-        this.type = type;
     }
 
     public Integer getId() {

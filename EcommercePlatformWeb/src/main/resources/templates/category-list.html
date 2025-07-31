@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Open Mall</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+<body>
+
+    <div th:replace="base :: header"></div>       
+
+    <div class="container mt-5">
+        <h1 class="text-center">Chào mừng đến với Open Mall</h1>
+        <p class="lead text-center">Chúng tôi luôn sẵn sàng phục vụ và hỗ trợ 24/24</p>            
+        <p class="lead text-center">Nếu thắc mắc hay cần hỗ trợ. Vui lòng liên hệ chúng tôi qua hotline: 0978 XXX 510</p>
+
+    </div>
+
+    <div class="container mt-4">
+        <div id="content" th:fragment="content">
+            <div th:if="${categories}" class="row">
+                <h2>Categories</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Created Date</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${categories}">
+                            <td th:text="${c.id}"></td>
+                            <td th:text="${c.name}"></td>
+                            <td th:text="${c.description}"></td>
+                            <td th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy')}"></td>
+                            <td>
+                                <a th:href="@{/categories/edit/{id}(id=${c.id})}" class="btn btn-primary btn-sm">Edit</a>
+                                <a th:href="@{/categories/delete/{id}(id=${c.id})}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>

@@ -5,6 +5,7 @@
 package com.htw.ecommerceplatform;
 
 import com.htw.pojo.*;
+import jakarta.persistence.criteria.Order;
 
 import java.util.Properties;
 import org.hibernate.SessionFactory;

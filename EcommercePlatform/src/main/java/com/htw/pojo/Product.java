@@ -54,16 +54,13 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(name = "price")
     private BigDecimal price;
-    @Basic(optional = false)
     @Column(name = "image")
     private String image;
     @Lob
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
     @Column(name = "active")
-    private boolean active;
-    @Basic(optional = false)
+    private Boolean active;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -82,13 +79,10 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, String name, BigDecimal price, String image, boolean active, Date createdDate) {
+    public Product(Integer id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.image = image;
-        this.active = active;
-        this.createdDate = createdDate;
     }
 
     public Integer getId() {
@@ -131,11 +125,11 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public boolean getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 

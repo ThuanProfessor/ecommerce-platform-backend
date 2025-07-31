@@ -1,0 +1,52 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cửa hàng</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+
+<body>
+
+    <div th:replace="base :: header"></div> 
+
+    <h1>Danh sách các cửa hàng</h1>
+
+    <div class="container mt-4">
+        <div id="content" th:fragment="content">
+            <div th:if="${stores}" class="row">
+                <h2>Stores</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Created Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="store : ${stores}">
+                            <td th:text="${store.id}"></td>
+                            <td>
+                                <img th:src="${store.avatar}" class="rounded" width="80" alt="Ảnh đại diện cửa hàng"/>
+                            </td>
+                            <td th:text="${store.name}"></td>
+                            <td th:text="${store.description}"></td>
+                            <td th:text="${#dates.format(store.createdDate, 'dd-MM-yyyy')}"></td>
+                            <td>
+                                <a th:href="@{/stores/edit/{id}(id=${store.id})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/stores/delete/{id}(id=${store.id})}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>
