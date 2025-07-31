@@ -12,7 +12,7 @@
         <h1 class="mt-2">QUẢN LÝ SẢN PHẨM</h1>
         <p>Bạn có thể thêm sản phẩm mới hoặc chỉnh sửa thông tin của sản phẩm</p>
 
-        <a th:href="@{/products/add}" class="btn btn-success mt-2">➕ Thêm sản phẩm</a>
+        
 
         <form th:action="@{/products}">
             <div class="mb-3 mt-3">
@@ -68,8 +68,10 @@
                             </tr>
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
+            <a th:href="@{/products/add}" class="btn btn-success mt-2">➕ Thêm sản phẩm</a>
         </div>
     </div>
 

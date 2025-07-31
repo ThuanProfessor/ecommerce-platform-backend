@@ -15,6 +15,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -39,12 +41,17 @@ public class Company implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
+    @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
+    @Size(max = 50)
     @Column(name = "tax")
     private String tax;
+    @Size(max = 100)
     @Column(name = "type")
     private String type;
     @JoinColumn(name = "user_id", referencedColumnName = "id")

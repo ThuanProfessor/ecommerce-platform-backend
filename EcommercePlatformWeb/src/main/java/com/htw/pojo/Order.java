@@ -20,6 +20,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -29,12 +31,12 @@ import java.util.Set;
  * @author nguye
  */
 @Entity
-@Table(name = "`order`")
+@Table(name = "order")
 @NamedQueries({
-        @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o"),
-        @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.id = :id"),
-        @NamedQuery(name = "Order.findByCreatedDate", query = "SELECT o FROM Order o WHERE o.createdDate = :createdDate"),
-        @NamedQuery(name = "Order.findByNote", query = "SELECT o FROM Order o WHERE o.note = :note") })
+    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o"),
+    @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.id = :id"),
+    @NamedQuery(name = "Order.findByCreatedDate", query = "SELECT o FROM Order o WHERE o.createdDate = :createdDate"),
+    @NamedQuery(name = "Order.findByNote", query = "SELECT o FROM Order o WHERE o.note = :note")})
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,9 +46,11 @@ public class Order implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Size(max = 255)
     @Column(name = "note")
     private String note;
     @OneToOne(mappedBy = "orderId")
@@ -141,5 +145,5 @@ public class Order implements Serializable {
     public String toString() {
         return "com.htw.pojo.Order[ id=" + id + " ]";
     }
-
+    
 }

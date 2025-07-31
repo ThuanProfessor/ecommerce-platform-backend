@@ -20,6 +20,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -45,11 +47,14 @@ public class Review implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "rate")
     private int rate;
     @Lob
+    @Size(max = 65535)
     @Column(name = "content")
     private String content;
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     @Column(name = "created_date")

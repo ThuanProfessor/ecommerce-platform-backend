@@ -5,6 +5,7 @@
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +20,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -44,17 +47,24 @@ public class Store implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "avatar")
     private String avatar;
     @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
+    private Set<CateStore> cateStoreSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne
     private User userId;
@@ -112,6 +122,14 @@ public class Store implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Set<CateStore> getCateStoreSet() {
+        return cateStoreSet;
+    }
+
+    public void setCateStoreSet(Set<CateStore> cateStoreSet) {
+        this.cateStoreSet = cateStoreSet;
     }
 
     public User getUserId() {

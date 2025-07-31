@@ -21,13 +21,12 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
-
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -53,15 +52,20 @@ public class Product implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Column(name = "price")
     private BigDecimal price;
+    @Size(max = 255)
     @Column(name = "image")
     private String image;
     @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
     @Column(name = "active")
@@ -76,7 +80,7 @@ public class Product implements Serializable {
     private Set<Review> reviewSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private Set<OrderDetail> orderDetailSet;
-
+    
     @Transient
     private MultipartFile file;
 

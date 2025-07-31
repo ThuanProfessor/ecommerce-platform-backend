@@ -16,6 +16,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -44,19 +46,29 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
+    @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "full_name")
     private String fullName;
+    @Size(max = 20)
     @Column(name = "number_phone")
     private String numberPhone;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "role")
     private String role;
     @Column(name = "is_verified")
@@ -68,7 +80,7 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "userId")
     private Store store;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Order> orderSet;
+    private Set<Order> order1Set;
 
     public User() {
     }
@@ -173,12 +185,12 @@ public class User implements Serializable {
         this.store = store;
     }
 
-    public Set<Order> getOrderSet() {
-        return orderSet;
+    public Set<Order> getOrder1Set() {
+        return order1Set;
     }
 
-    public void setOrderSet(Set<Order> order1Set) {
-        this.orderSet = orderSet;
+    public void setOrder1Set(Set<Order> order1Set) {
+        this.order1Set = order1Set;
     }
 
     @Override

@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -39,9 +40,11 @@ public class OrderDetail implements Serializable {
     private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "quantity")
     private int quantity;
     @JoinColumn(name = "order_id", referencedColumnName = "id")
