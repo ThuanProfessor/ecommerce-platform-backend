@@ -26,4 +26,8 @@ public class StoreServiceImpl implements StoreService{
     public List<Store> getStores() {
         return storeRepo.getStores();
     }
+
+    @Override
+    public void deleteStore(int id) {
+    }
 }

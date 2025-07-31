@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface StoreService {
     List<Store> getStores();
+
+    public void deleteStore(int id);
 }

@@ -36,8 +36,8 @@
                             <td th:text="${store.description}"></td>
                             <td th:text="${#dates.format(store.createdDate, 'dd-MM-yyyy')}"></td>
                             <td>
-                                <a th:href="@{/stores/edit/{id}(id=${store.id})}" class="btn btn-primary btn-sm">Edit</a>
-                                <a th:href="@{/stores/delete/{id}(id=${store.id})}" class="btn btn-danger btn-sm">Delete</a>
+                                <a th:href="@{/stores/edit/{id}(id=${store.id})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{/stores/delete/{id}(id=${store.id})}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     </tbody>

@@ -49,7 +49,6 @@ public class Payment implements Serializable {
     @Basic(optional = false)
     @Column(name = "type")
     private String type;
-    @Basic(optional = false)
     @Column(name = "status")
     private String status;
     @Column(name = "created_date")
@@ -66,11 +65,10 @@ public class Payment implements Serializable {
         this.id = id;
     }
 
-    public Payment(Integer id, BigDecimal amount, String type, String status) {
+    public Payment(Integer id, BigDecimal amount, String type) {
         this.id = id;
         this.amount = amount;
         this.type = type;
-        this.status = status;
     }
 
     public Integer getId() {

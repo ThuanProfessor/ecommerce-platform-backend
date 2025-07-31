@@ -47,13 +47,11 @@ public class Review implements Serializable {
     @Basic(optional = false)
     @Column(name = "rate")
     private int rate;
-    @Basic(optional = false)
     @Lob
     @Column(name = "content")
     private String content;
     @Column(name = "image")
     private String image;
-    @Basic(optional = false)
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -76,11 +74,9 @@ public class Review implements Serializable {
         this.id = id;
     }
 
-    public Review(Integer id, int rate, String content, Date createdDate) {
+    public Review(Integer id, int rate) {
         this.id = id;
         this.rate = rate;
-        this.content = content;
-        this.createdDate = createdDate;
     }
 
     public Integer getId() {

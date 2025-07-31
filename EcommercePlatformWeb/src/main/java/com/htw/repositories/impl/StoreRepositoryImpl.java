@@ -39,4 +39,6 @@ public class StoreRepositoryImpl implements StoreRepository {
 
         return query.getResultList();
     }
+
+    
 }

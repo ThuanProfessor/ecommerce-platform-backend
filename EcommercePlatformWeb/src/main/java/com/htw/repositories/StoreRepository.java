@@ -15,4 +15,5 @@ import java.util.List;
 public interface StoreRepository {
     @Query("SELECT s From Store s")
     List<Store> getStores();
+
 }

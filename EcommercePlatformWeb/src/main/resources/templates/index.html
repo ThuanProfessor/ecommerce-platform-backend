@@ -1,54 +1,153 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Open Mall</title>
+<head>
+    <title>Trang chủ</title>
     <th:block th:replace="base :: bootstrap"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<div th:replace="base :: header"></div>
 
-    <div th:replace="base :: header"></div>       
-
-    <div class="container mt-5">
-        <h1 class="text-center">Chào mừng đến với Open Mall</h1>
-        <p class="lead text-center">Chúng tôi luôn sẵn sàng phục vụ và hỗ trợ 24/24</p>            
-        <p class="lead text-center">Nếu thắc mắc hay cần hỗ trợ. Vui lòng liên hệ chúng tôi qua hotline: 0978 XXX 510</p>
-
-    </div>
-
-    <div class="container mt-4">
-        <div id="content" th:fragment="content">
-            <div th:if="${categories}" class="row">
-                <h2>Categories</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Created Date</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="c : ${categories}">
-                            <td th:text="${c.id}"></td>
-                            <td th:text="${c.name}"></td>
-                            <td th:text="${c.description}"></td>
-                            <td th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy')}"></td>
-                            <td>
-                                <a th:href="@{/categories/edit/{id}(id=${c.id})}" class="btn btn-primary btn-sm">Edit</a>
-                                <a th:href="@{/categories/delete/{id}(id=${c.id})}" class="btn btn-danger btn-sm">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<main class="container">
+    <h1 class="mb-2">Thống Kê</h1>
+ 
+    <h3>Sản phẩm</h3>
+    <div class="row">
+        <div class="col-md-5 col-6">
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Doanh thu</th>
+                </tr>
+                <tr th:each="s : ${productRevenues}">
+                    <td th:text="${s[0]}"></td>
+                    <td th:text="${s[1]}"></td>
+                    <td th:text="${s[2]}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-7 col-6">
+            <canvas id="productChart" height="200"></canvas>
         </div>
     </div>
 
 
+    <h3>Người dùng</h3>
+    <div class="row">
+        <div class="col-md-5 col-6">
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Tên</th>
+                    <th>Role</th>
+                </tr>
+                <tr th:each="u : ${users}">
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.fullName}"></td>
+                    <td th:text="${u.role}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-7 col-6">
+            <canvas id="userChart" height="200"></canvas>
+        </div>
+    </div>
 
-    <div th:replace="base :: footer"></div>
+    <h3>Cửa hàng</h3>
+    <div class="row">
+        <div class="col-md-5 col-6">
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Tên cửa hàng</th>
+                </tr>
+                <tr th:each="s : ${stores}">
+                    <td th:text="${s.id}"></td>
+                    <td th:text="${s.name}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-7 col-6">
+            <canvas id="storeChart" height="200"></canvas>
+        </div>
+    </div>
 
+</main>
+<div th:replace="base :: footer"></div>
+
+<script th:inline="javascript">
+
+ 
+    let productStats = [];
+    let userStats = [];
+    let storeStats = [];
+    let productLabels = productStats.map(o => o[1]);
+    let productData = productStats.map(o => o[2]);
+    if (productLabels.length && productData.length) {
+        new Chart(document.getElementById('productChart'), {
+            type: 'bar',
+            data: {
+                labels: productLabels,
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: productData,
+                    backgroundColor: 'rgba(54,162,235,0.6)',
+                    borderColor: 'rgba(54,162,235,1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    let roleCount = {};
+    userStats.forEach(u => {
+        roleCount[u.role] = (roleCount[u.role] || 0) + 1;
+    });
+    let roleLabels = Object.keys(roleCount);
+    let roleData = Object.values(roleCount);
+    if (roleLabels.length && roleData.length) {
+        new Chart(document.getElementById('userChart'), {
+            type: 'pie',
+            data: {
+                labels: roleLabels,
+                datasets: [{
+                    label: 'Số lượng user theo role',
+                    data: roleData,
+                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0']
+                }]
+            }
+        });
+    }
+
+    let storeLabels = storeStats.map(s => s.name);
+    let storeData = storeStats.map(s => s.id);
+    if (storeLabels.length && storeData.length) {
+        new Chart(document.getElementById('storeChart'), {
+            type: 'bar',
+            data: {
+                labels: storeLabels,
+                datasets: [{
+                    label: 'Store ID',
+                    data: storeData,
+                    backgroundColor: 'rgba(255,99,132,0.6)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+</script>
 </body>
 </html>

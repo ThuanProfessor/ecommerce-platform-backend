@@ -5,7 +5,6 @@
 package com.htw.controllers;
 
 import com.htw.services.CategoryService;
-import jakarta.data.page.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,7 @@ public class CategoryController {
     @GetMapping("")
     public String getCate(Model model){
         model.addAttribute("categories", cateSer.getCates());
-        return "index";
+        return "category-list";
         
     }
 }

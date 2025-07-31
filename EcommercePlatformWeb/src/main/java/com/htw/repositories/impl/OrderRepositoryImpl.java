@@ -1,11 +1,4 @@
-
 package com.htw.repositories.impl;
-
-import com.htw.pojo.User;
-import com.htw.repositories.UserRepository;
-
-import jakarta.persistence.Query;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -14,18 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 
+import com.htw.pojo.Order;
+import com.htw.repositories.OrderRepository;
+
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
+
 @Repository
 @Transactional
-public class UserRepositoryImpl implements UserRepository {
+public class OrderRepositoryImpl implements OrderRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<User> getUsers() {
+    public List<Order> getOrders() {
         Session session = this.factory.getObject().getCurrentSession();
-        Query query = session.createQuery("FROM User", User.class);
+        Query query = session.createQuery("From Order", Order.class);
 
         return query.getResultList();
     }
+
+    
 
 }

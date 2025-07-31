@@ -4,7 +4,6 @@
  */
 package com.htw.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,7 +52,6 @@ public class Store implements Serializable {
     @Lob
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -61,7 +59,6 @@ public class Store implements Serializable {
     @OneToOne
     private User userId;
     @OneToMany(mappedBy = "storeId")
-    @JsonIgnore
     private Set<Category> categorySet;
 
     public Store() {
@@ -71,11 +68,10 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public Store(Integer id, String name, String avatar, Date createdDate) {
+    public Store(Integer id, String name, String avatar) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
-        this.createdDate = createdDate;
     }
 
     public Integer getId() {
