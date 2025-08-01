@@ -1,6 +1,9 @@
 package com.htw.repositories;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.htw.pojo.User;
 
@@ -10,4 +13,9 @@ import com.htw.pojo.User;
  */
 public interface UserRepository {
     List<User> getUsers();
+    User getUserByUsername(String username);
+    User addUser(User u);
+    User updateUser(User u);
+    boolean authenticate(String username, String password);
 }
+

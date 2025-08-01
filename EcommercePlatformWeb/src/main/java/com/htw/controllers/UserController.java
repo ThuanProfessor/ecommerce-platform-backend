@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.htw.services.UserService;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
-@RequestMapping("/users")
+
 public class UserController {
 
     @Autowired
@@ -19,6 +21,12 @@ public class UserController {
     public String listUser(Model model) {
         model.addAttribute("users", userService.getUser());
         return "user-list";
+    }
+
+
+    @GetMapping("/login")
+    public String loginView(){
+        return "login";
     }
 
 }
