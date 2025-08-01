@@ -33,8 +33,22 @@ public class HibernateConfigs {
 
         sessionFactory.setPackagesToScan(new String[]{
             "com.htw.pojo"
-
         });
+        
+        // Chỉ định rõ các entity classes để tránh xung đột
+        sessionFactory.setAnnotatedClasses(
+            com.htw.pojo.Category.class,
+            com.htw.pojo.CateStore.class,
+            com.htw.pojo.Company.class,
+            com.htw.pojo.OrderDetail.class,
+            com.htw.pojo.Payment.class,
+            com.htw.pojo.Product.class,
+            com.htw.pojo.Review.class,
+            com.htw.pojo.SaleOrder.class,
+            com.htw.pojo.Store.class,
+            com.htw.pojo.User.class
+        );
+        
         sessionFactory.setDataSource((javax.sql.DataSource) dataSource());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;

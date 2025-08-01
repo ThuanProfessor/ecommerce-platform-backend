@@ -14,17 +14,14 @@ public class StatsController {
 
     @Autowired
     private StatsService statsService;
-    @Autowired
-    private UserService userService;
     
-    @Autowired
-    private StoreService storeService;
+    
+    
 
     @GetMapping("/stats")
-    public String index(Model model) {
+    public String stats(Model model) {
         model.addAttribute("productRevenues", statsService.statsRevenueByProduct());
-        model.addAttribute("users", userService.getUser());
-        model.addAttribute("stores", storeService.getStores());
+        
 
         return "stats";
     }
