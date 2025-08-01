@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
@@ -21,7 +17,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "company")

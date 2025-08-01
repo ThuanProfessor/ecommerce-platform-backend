@@ -109,8 +109,6 @@ public class ProductRepositotyImpl implements ProductRepository {
     }
 
     
-
-
     @Override
     public void deleleProduct(int id) {
         Session session = this.factory.getObject().getCurrentSession();

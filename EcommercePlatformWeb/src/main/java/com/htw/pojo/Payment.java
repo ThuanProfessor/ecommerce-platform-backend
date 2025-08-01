@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
@@ -25,7 +21,7 @@ import java.util.Date;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "payment")
@@ -62,7 +58,7 @@ public class Payment implements Serializable {
     private Date createdDate;
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @OneToOne
-    private Order orderId;
+    private SaleOrder orderId;
 
     public Payment() {
     }
@@ -117,11 +113,11 @@ public class Payment implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Order getOrderId() {
+    public SaleOrder getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Order orderId) {
+    public void setOrderId(SaleOrder orderId) {
         this.orderId = orderId;
     }
 

@@ -4,7 +4,7 @@
  */
 package com.htw.services;
 
-import com.htw.pojo.Order;
+import com.htw.pojo.SaleOrder;
 import java.util.List;
 
 /**
@@ -12,5 +12,5 @@ import java.util.List;
  * @author nguye
  */
 public interface OrderService {
-    List<Order> getOrders();
+    List<SaleOrder> getOrders();
 }

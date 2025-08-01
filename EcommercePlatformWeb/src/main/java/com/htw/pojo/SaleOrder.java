@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
@@ -28,16 +24,16 @@ import java.util.Set;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
-@Table(name = "order")
+@Table(name = "sale_order")
 @NamedQueries({
-    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o"),
-    @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.id = :id"),
-    @NamedQuery(name = "Order.findByCreatedDate", query = "SELECT o FROM Order o WHERE o.createdDate = :createdDate"),
-    @NamedQuery(name = "Order.findByNote", query = "SELECT o FROM Order o WHERE o.note = :note")})
-public class Order implements Serializable {
+    @NamedQuery(name = "SaleOrder.findAll", query = "SELECT s FROM SaleOrder s"),
+    @NamedQuery(name = "SaleOrder.findById", query = "SELECT s FROM SaleOrder s WHERE s.id = :id"),
+    @NamedQuery(name = "SaleOrder.findByCreatedDate", query = "SELECT s FROM SaleOrder s WHERE s.createdDate = :createdDate"),
+    @NamedQuery(name = "SaleOrder.findByNote", query = "SELECT s FROM SaleOrder s WHERE s.note = :note")})
+public class SaleOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,22 +49,22 @@ public class Order implements Serializable {
     @Size(max = 255)
     @Column(name = "note")
     private String note;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User userId;
     @OneToOne(mappedBy = "orderId")
     private Payment payment;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId")
     private Set<OrderDetail> orderDetailSet;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User userId;
 
-    public Order() {
+    public SaleOrder() {
     }
 
-    public Order(Integer id) {
+    public SaleOrder(Integer id) {
         this.id = id;
     }
 
-    public Order(Integer id, Date createdDate) {
+    public SaleOrder(Integer id, Date createdDate) {
         this.id = id;
         this.createdDate = createdDate;
     }
@@ -97,6 +93,14 @@ public class Order implements Serializable {
         this.note = note;
     }
 
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
     public Payment getPayment() {
         return payment;
     }
@@ -113,14 +117,6 @@ public class Order implements Serializable {
         this.orderDetailSet = orderDetailSet;
     }
 
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -131,10 +127,10 @@ public class Order implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Order)) {
+        if (!(object instanceof SaleOrder)) {
             return false;
         }
-        Order other = (Order) object;
+        SaleOrder other = (SaleOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -143,7 +139,7 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "com.htw.pojo.Order[ id=" + id + " ]";
+        return "com.htw.pojo.SaleOrder[ id=" + id + " ]";
     }
     
 }

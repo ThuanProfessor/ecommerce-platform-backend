@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
@@ -23,7 +19,7 @@ import java.util.Set;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "user")
@@ -75,12 +71,12 @@ public class User implements Serializable {
     private Boolean isVerified;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Review> reviewSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<SaleOrder> saleOrderSet;
     @OneToOne(mappedBy = "userId")
     private Company company;
     @OneToOne(mappedBy = "userId")
     private Store store;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Order> order1Set;
 
     public User() {
     }
@@ -169,6 +165,14 @@ public class User implements Serializable {
         this.reviewSet = reviewSet;
     }
 
+    public Set<SaleOrder> getSaleOrderSet() {
+        return saleOrderSet;
+    }
+
+    public void setSaleOrderSet(Set<SaleOrder> saleOrderSet) {
+        this.saleOrderSet = saleOrderSet;
+    }
+
     public Company getCompany() {
         return company;
     }
@@ -183,14 +187,6 @@ public class User implements Serializable {
 
     public void setStore(Store store) {
         this.store = store;
-    }
-
-    public Set<Order> getOrder1Set() {
-        return order1Set;
-    }
-
-    public void setOrder1Set(Set<Order> order1Set) {
-        this.order1Set = order1Set;
     }
 
     @Override

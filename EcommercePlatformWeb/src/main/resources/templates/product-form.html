@@ -15,7 +15,7 @@
     </div>
 
     <div class="container">
-        <form  method="post" th:action="@{/products/add}" th:object="${product}" enctype="multipart/form-data">
+        <form  method="post" th:action="@{/products/save}" th:object="${product}" enctype="multipart/form-data">
 
             <div class="mb-3 mt-3">
                 <label for="name" class="form-label">Tên sản phẩm: </label>
@@ -28,36 +28,27 @@
             </div>
 
             <div class="mb-3 mt-3">
-                <label for="createdDate" class="form-label">Ngày tạo: </label>
-                <input readonly="true" type="datetime-local" class="form-control" id="createdDate" placeholder="Ngày tạo" th:field="*{createdDate}"  />
-            </div>
-
-            <div class="mb-3 mt-3">
                 <label for="price" class="form-label">Giá sản phẩm: </label>
                 <input type="text" class="form-control" id="price" placeholder="Giá sản phẩm" th:field="*{price}"  />
             </div>
-            <!--            <div class="mb-3 mt-3">
-                            <label for="cate" class="form-label">Danh mục sản phẩm: </label>
-                            <select class="form-select" th:field="*{categoryId}" id="cate">
-                                <option th:each="c: ${categories}" th:value="${c.id}" th:text="${c.name}">1</option>
-                            </select>
-            </div>-->
-            <!--
-                        <div class="mb-3 mt-3 form-floating">
-                            <input type="file" class="form-control" id="image" th:field="*{file}" />
-                        </div>-->
             <div class="mb-3 mt-3">
-                <label for="file" class="form-label">Ảnh sản phẩm: </label>
-                <input type="file" class="form-control" id="file" name="file" />
-                <img th:if="${product.image != null}" th:src="@{${product.image}}" width="200" />
-                <input type="hidden" th:field="*{image}" />
+                <label for="cate" class="form-label">Danh mục sản phẩm: </label>
+                <select class="form-select" th:field="*{categoryId}" id="cate">
+                    <option th:each="cate: ${categories}" th:value="${cate.id}" th:text="${cate.name}">1</option>
+                </select>
             </div>
 
-            <!--            <div class="mb-3 mt-3">
-                            <label for="image" class="form-label">Ảnh sản phẩm: </label>
-                            <input type="file" class="form-control" th:field="*{image}"  />
-                            <img th:if="${product.image != null}" th:src="${product.image}" width="200" />
-                        </div>-->
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="active" th:field="*{active}" />
+                <label class="form-check-label" for="active">Kích hoạt sản phẩm</label>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="price" class="form-label">Ảnh sản phẩm: </label>
+                <input type="file" class="form-control" th:field="*{file}"  />
+                <img th:if="${product.image != null}" th:src="${product.image}" width="200" />
+            </div>
+
 
             <div class="mb-3 mt-3">
                 <input type="hidden" class="form-control" th:field="*{id}"  />

@@ -26,37 +26,26 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public String addView(Model model, @RequestParam Map<String, String> params) {
+    public String viewProduct(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("products", this.productService.getProducts(params));
-        model.addAttribute("product", new Product());
         return "product";
     }
 
-    @PostMapping("/products/add")
-    public String add(@ModelAttribute("product") Product p) {
-        System.out.println("Product: " + p.getName());
-        if (p.getId() != null) {
-            Product existing = productService.getProductById(p.getId());
-            p.setCreatedDate(existing.getCreatedDate());
-            p.setImage(existing.getImage());
-        } else {
-            p.setCreatedDate(new Date());
-        }
-
-        this.productService.addOrUpdateProduct(p);
-        return "redirect:/products";
-    }
-
     @GetMapping("/products/add")
-    public String addForm(Model model) {
+    public String addView(Model model) {
         model.addAttribute("product", new Product());
         return "product-form";
     }
 
-    @GetMapping("/products/{productId}")
-    public String updateProduct(Model model, @PathVariable(value = "productId") int id) {
-        model.addAttribute("product", this.productService.getProductById(id));
+    @PostMapping("/products/save")
+    public String add(@ModelAttribute(value = "product") Product p) {
+        this.productService.addOrUpdateProduct(p);
+        return "redirect:/products";
+    }
 
+    @GetMapping("/products/{productId}")
+    public String updateView(Model model, @PathVariable(value = "productId") int id) {
+        model.addAttribute("product", this.productService.getProductById(id));
         return "product-form";
     }
 

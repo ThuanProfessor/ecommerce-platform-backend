@@ -2,11 +2,11 @@ package com.htw.repositories;
 
 import java.util.List;
 
-import com.htw.pojo.Order;
+import com.htw.pojo.SaleOrder;
 /**
  *
  * @author nguye
  */
 public interface OrderRepository {
-    List<Order> getOrders();
+    List<SaleOrder> getOrders();
 }

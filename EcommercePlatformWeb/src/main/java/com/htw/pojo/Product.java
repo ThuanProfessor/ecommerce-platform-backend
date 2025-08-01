@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,20 +15,17 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "product")
@@ -41,9 +35,22 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
     @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image"),
-    @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active"),
-    @NamedQuery(name = "Product.findByCreatedDate", query = "SELECT p FROM Product p WHERE p.createdDate = :createdDate")})
+    @NamedQuery(name = "Product.findByActive", query = "SELECT p FROM Product p WHERE p.active = :active")})
 public class Product implements Serializable {
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,20 +77,24 @@ public class Product implements Serializable {
     private String description;
     @Column(name = "active")
     private Boolean active;
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Category categoryId;
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+    @JsonIgnore
     private Set<Review> reviewSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+    @JsonIgnore
     private Set<OrderDetail> orderDetailSet;
-    
+
     @Transient
     private MultipartFile file;
-
+    
     public Product() {
     }
 
@@ -145,20 +156,20 @@ public class Product implements Serializable {
         this.active = active;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Category getCategoryId() {
         return categoryId;
     }
 
     public void setCategoryId(Category categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Store getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Store storeId) {
+        this.storeId = storeId;
     }
 
     public Set<Review> getReviewSet() {
@@ -200,20 +211,6 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "com.htw.pojo.Product[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
     }
     
 }

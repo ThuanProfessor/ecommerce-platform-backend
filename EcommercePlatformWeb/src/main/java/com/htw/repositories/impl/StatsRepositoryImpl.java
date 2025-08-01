@@ -2,7 +2,7 @@ package com.htw.repositories.impl;
 
 import com.htw.pojo.OrderDetail;
 import com.htw.pojo.Product;
-import com.htw.pojo.Order;
+import com.htw.pojo.SaleOrder;
 import com.htw.pojo.Category;
 import com.htw.pojo.User;
 import com.htw.pojo.Store;
@@ -51,7 +51,7 @@ public List<Object[]> statsRevenueByTime(String time, int year) {
     CriteriaBuilder b = s.getCriteriaBuilder();
     CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
     Root<OrderDetail> root = q.from(OrderDetail.class);
-    Join<OrderDetail, Order> join = root.join("orderId", JoinType.INNER);
+    Join<OrderDetail, SaleOrder> join = root.join("orderId", JoinType.INNER);
 
     String functionName = "month".equalsIgnoreCase(time) ? "MONTH" : "QUARTER";
 
@@ -71,7 +71,7 @@ public List<Object[]> statsRevenueByTime(String time, int year) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        Root<Order> root = q.from(Order.class);
+        Root<SaleOrder> root = q.from(SaleOrder.class);
 
         q.multiselect(b.function("MONTH", Integer.class, root.get("createdDate")),
                 b.count(root.get("id")));
@@ -159,7 +159,7 @@ public List<Object[]> statsRevenueByTime(String time, int year) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Long> q = b.createQuery(Long.class);
-        Root<Order> root = q.from(Order.class);
+        Root<SaleOrder> root = q.from(SaleOrder.class);
 
         q.select(b.count(root.get("id")));
         Query query = s.createQuery(q);

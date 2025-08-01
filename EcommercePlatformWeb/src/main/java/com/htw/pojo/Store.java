@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
@@ -28,7 +24,7 @@ import java.util.Set;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "store")
@@ -63,13 +59,13 @@ public class Store implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @OneToMany(mappedBy = "storeId")
+    private Set<Product> productSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private Set<CateStore> cateStoreSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne
     private User userId;
-    @OneToMany(mappedBy = "storeId")
-    private Set<Category> categorySet;
 
     public Store() {
     }
@@ -124,6 +120,14 @@ public class Store implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public Set<Product> getProductSet() {
+        return productSet;
+    }
+
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
+    }
+
     public Set<CateStore> getCateStoreSet() {
         return cateStoreSet;
     }
@@ -138,14 +142,6 @@ public class Store implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
-    }
-
-    public Set<Category> getCategorySet() {
-        return categorySet;
-    }
-
-    public void setCategorySet(Set<Category> categorySet) {
-        this.categorySet = categorySet;
     }
 
     @Override

@@ -20,12 +20,12 @@ public class StatsController {
     @Autowired
     private StoreService storeService;
 
-    @GetMapping("/")
+    @GetMapping("/stats")
     public String index(Model model) {
         model.addAttribute("productRevenues", statsService.statsRevenueByProduct());
         model.addAttribute("users", userService.getUser());
         model.addAttribute("stores", storeService.getStores());
 
-        return "index";
+        return "stats";
     }
 }

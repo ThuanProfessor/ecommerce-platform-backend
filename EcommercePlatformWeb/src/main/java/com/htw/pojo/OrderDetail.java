@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +18,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "order_detail")
@@ -47,12 +44,13 @@ public class OrderDetail implements Serializable {
     @NotNull
     @Column(name = "quantity")
     private int quantity;
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Order orderId;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Product productId;
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    @JsonIgnore
+    private SaleOrder orderId;
 
     public OrderDetail() {
     }
@@ -91,20 +89,20 @@ public class OrderDetail implements Serializable {
         this.quantity = quantity;
     }
 
-    public Order getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Order orderId) {
-        this.orderId = orderId;
-    }
-
     public Product getProductId() {
         return productId;
     }
 
     public void setProductId(Product productId) {
         this.productId = productId;
+    }
+
+    public SaleOrder getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(SaleOrder orderId) {
+        this.orderId = orderId;
     }
 
     @Override

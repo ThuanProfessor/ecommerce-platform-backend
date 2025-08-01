@@ -11,6 +11,7 @@
     <class>com.htw.pojo.Product</class>
     <class>com.htw.pojo.Review</class>
     <class>com.htw.pojo.Store</class>
-    <class>com.htw.pojo.Order</class>
+    <class>com.htw.pojo.SaleOrder</class>
+    <class>com.htw.pojo.Order1</class>
   </persistence-unit>
 </persistence>

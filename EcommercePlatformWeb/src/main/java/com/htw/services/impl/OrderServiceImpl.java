@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.htw.pojo.Order;
+import com.htw.pojo.SaleOrder;
 import com.htw.repositories.OrderRepository;
 import com.htw.services.OrderService;
 
@@ -16,7 +16,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Override
-    public List<Order> getOrders() {
+    public List<SaleOrder> getOrders() {
         return this.orderRepository.getOrders();
 
     }

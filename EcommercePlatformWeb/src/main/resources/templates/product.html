@@ -46,7 +46,6 @@
                                 <th>Tên sản phẩm</th>
                                 <th>Mô tả</th>
                                 <th>Giá</th>
-                                <th>Ngày tạo</th>
                                 <th>Kích hoạt</th>
                                 <th></th>
                             </tr>
@@ -59,7 +58,6 @@
                                 <td th:text="${product.name}"></td>
                                 <td th:text="${product.description}"></td>
                                 <td th:text="${product.price} + ' VNĐ'"></td>
-                                <td th:text="${#dates.format(product.createdDate, 'dd-MM-yyyy')}"></td>
                                 <td class="text-center" th:text="${product.active} ? '✅' : '❌' "></td>
                                 <td>
                                     <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Edit</a>

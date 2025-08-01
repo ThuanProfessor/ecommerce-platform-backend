@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.htw.pojo;
 
 import jakarta.persistence.Basic;
@@ -11,9 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -28,7 +22,7 @@ import java.util.Set;
 
 /**
  *
- * @author nguye
+ * @author Trung Hau
  */
 @Entity
 @Table(name = "category")
@@ -61,9 +55,6 @@ public class Category implements Serializable {
     private Set<Product> productSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
     private Set<CateStore> cateStoreSet;
-    @JoinColumn(name = "store_id", referencedColumnName = "id")
-    @ManyToOne
-    private Store storeId;
 
     public Category() {
     }
@@ -123,14 +114,6 @@ public class Category implements Serializable {
 
     public void setCateStoreSet(Set<CateStore> cateStoreSet) {
         this.cateStoreSet = cateStoreSet;
-    }
-
-    public Store getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(Store storeId) {
-        this.storeId = storeId;
     }
 
     @Override
