@@ -14,6 +14,7 @@ public class StatsController {
 
     @Autowired
     private StatsService statsService;
+
     
     
     
@@ -21,7 +22,7 @@ public class StatsController {
     @GetMapping("/stats")
     public String stats(Model model) {
         model.addAttribute("productRevenues", statsService.statsRevenueByProduct());
-        
+        model.addAttribute("statsCategoryByCountProduct", statsService.statsCategory());
 
         return "stats";
     }

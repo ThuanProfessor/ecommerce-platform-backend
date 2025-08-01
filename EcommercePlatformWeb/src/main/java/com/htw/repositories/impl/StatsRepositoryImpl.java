@@ -10,6 +10,8 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
+import java.util.Locale.Category;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -37,6 +39,28 @@ public class StatsRepositoryImpl implements StatsRepository {
         q.orderBy(b.desc(b.sum(b.prod(root.get("quantity"), root.get("unitPrice")))));
         
         Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> statsCategory() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<Product> root = q.from(Product.class);
+        Join<Product, Category> join = root.join("category", JoinType.INNER);
+
+        q.multiselect(
+            join.get("id"),
+            join.get("name"),
+            b.count(root.get("id"))
+        );
+
+        q.groupBy(join.get("id"), join.get("name"));
+        q.orderBy(b.desc((b.count(root.get("id")))));
+        
+        Query query = s.createQuery(q);
+
         return query.getResultList();
     }
 
