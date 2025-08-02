@@ -9,16 +9,21 @@ import com.htw.services.UserService;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
+    @GetMapping("/users")
     public String listUser(Model model) {
         model.addAttribute("users", userService.getUser());
         return "user-list";
+    }
+
+    @GetMapping("/login")
+    public String loginView() {
+
+        return "login";
     }
 
 }

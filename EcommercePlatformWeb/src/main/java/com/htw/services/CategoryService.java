@@ -12,5 +12,10 @@ import java.util.List;
  * @author nguye
  */
 public interface CategoryService {
+
     List<Category> getCates();
+
+    Category getCateById(int id);
+    
+    Category addOrUpdateCategory(Category cate);
 }

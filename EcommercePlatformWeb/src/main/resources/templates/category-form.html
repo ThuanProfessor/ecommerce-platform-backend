@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+
+    <main class="container">
+
+        <h2>Quản lý danh mục </h2>
+
+        <div class="container">
+            <form  method="post" th:action="@{/categories/save}" th:object="${category}">
+
+                <div class="mb-3 mt-3">
+                    <label for="name" class="form-label">Tên danh mục: </label>
+                    <input type="text" class="form-control" id="name" placeholder="Tên danh mục" th:field="*{name}" />
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="description" class="form-label">Mô tả: </label>
+                    <input type="text" class="form-control" id="description" placeholder="Mô tả" th:field="*{description}"  />
+                </div>      
+
+                <div class="mb-3 mt-3">
+                    <label for="price" class="form-label">Ngày tạo: </label>
+                    <input type="datetime-local" id="createdDate" class="form-control" th:field="*{createdDate}"  />
+                </div>
+
+
+                <div class="mb-3 mt-3">
+                    <input type="hidden" class="form-control" th:field="*{id}"  />
+                    <button class="btn btn-success mt-1" type="submit">
+                        <span th:if="${category.id == null}">Thêm danh mục</span>
+                        <span th:unless="${category.id == null}">Cập nhật danh mục</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>
