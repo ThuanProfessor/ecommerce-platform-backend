@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.htw.services.UserService;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -22,7 +23,6 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginView() {
-
         return "login";
     }
 

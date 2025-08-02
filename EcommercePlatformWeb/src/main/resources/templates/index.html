@@ -14,7 +14,26 @@
         <h3 class="lead text-center">Đây là trang quản trị của hệ thống Open Mall - Sàn thương mại điện tử số 1 tại Việt Nam</h3>
         
         <h2>Danh sách các danh mục </h2>
-        <p th:each="cate: ${categories}" th:text="${cate.name}"></p>
+        
+
+        <div>
+            <div class="container mt-3 mb-4">
+                <div class="row" th:each="c: ${categories}">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100" style="width: 100%">
+                            <img class="card-img-top" src="https://res.cloudinary.com/dg5ts9slf/image/upload/v1754067278/495393096_673972138668985_699751507047492857_n_fhfo1d.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 th:text="${c.name}" class="card-title"></h4>
+                                <p th:text="${c.description}" class="card-text"></p>
+                                <a th:href="@{/products}" class="btn btn-primary">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
     </main>
     
     <div th:replace="base :: footer"></div>

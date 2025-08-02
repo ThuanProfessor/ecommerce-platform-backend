@@ -1,0 +1,122 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thống Kê</title>
+    <th:text th:replace="base :: bootstrap"></th:text>
+</head>
+
+<body>
+    <div th:replace="base::header"></div>
+
+    <main class="container">
+    <h1>Thống kê sản phẩm</h1>
+        <div class="row">
+            <div class="col-md-5 col-6">
+                <table class="table">
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                    <tr th:each="s: ${productRevenues}">
+                        <td th:text="${s[0]}"></td>
+                        <td th:text="${s[1]}"></td>
+                        <td th:text="${s[2]}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-7 col-6">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <h1>Sản phẩm thuộc danh mục</h1>
+        
+        <div class="row mt-5">
+            <div class="col-md-5 col-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên danh mục</th>
+                            <th>Số lượng sản phẩm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c: ${statsCategoryByCountProduct}">
+                            <td th:text="${c[0]}"></td>
+                            <td th:text="${c[1]}"></td>
+                            <td th:text="${c[2]}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-7 col-6">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:inline="javascript">
+        window.onload = function () {
+            let stats = [[${productRevenues}]];
+            let data = stats.map(o => o[2]);
+            let labels = stats.map(o => o[1]);
+
+            const ctx = document.getElementById('myChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# Doanh thu',
+                        data: data,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            let statsCategory = [[${statsCategoryByCountProduct}]];
+            let cateLabels = statsCategory.map(c => c[1]);
+            let cateData = statsCategory.map(c => c[2]);
+
+            const ctx2 = document.getElementById('categoryChart');
+            new Chart(ctx2, {
+                type: 'pie',
+                data: {
+                    labels: cateLabels,
+                    datasets: [{
+                        label: '# Số lượng sản phẩm',
+                        data: cateData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(201, 203, 207, 0.5)'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+    </script>
+</body>
+</html>

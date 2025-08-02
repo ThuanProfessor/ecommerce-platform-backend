@@ -68,6 +68,10 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "price")
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    private Category category;
     @Size(max = 255)
     @Column(name = "image")
     private String image;
