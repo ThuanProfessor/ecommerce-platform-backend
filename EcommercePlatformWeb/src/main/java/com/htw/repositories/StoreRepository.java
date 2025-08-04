@@ -7,6 +7,7 @@ package com.htw.repositories;
 import com.htw.pojo.Product;
 import com.htw.pojo.Store;
 import jakarta.data.repository.Query;
+
 import java.util.List;
 import java.util.Map;
 

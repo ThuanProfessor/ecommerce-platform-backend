@@ -56,7 +56,7 @@ public class ApiProductController {
         this.productService.deleleProduct(id);
     }
 
-    @GetMapping("/products/{productId}/reviews")
+    @GetMapping("/products/{productId}/reviews-alt")
     public ResponseEntity<List<Review>> getReviews(@PathVariable(value = "productId") int id) {
         return new ResponseEntity<>(this.productService.getProductReviews(id), HttpStatus.OK);
     }

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.htw.pojo.Review;
 import com.htw.repositories.ReviewRepository;
 import com.htw.services.ReviewService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReviewServiceImpl implements ReviewService {
 
     @Autowired

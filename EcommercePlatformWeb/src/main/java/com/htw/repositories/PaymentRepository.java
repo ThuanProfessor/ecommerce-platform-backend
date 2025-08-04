@@ -16,4 +16,6 @@ public interface PaymentRepository {
     void deletePayment(int id);
     
     List<Payment> getPayments(Map<String, String> params);
+
+    List<Payment> getPaymentHistory();
 }

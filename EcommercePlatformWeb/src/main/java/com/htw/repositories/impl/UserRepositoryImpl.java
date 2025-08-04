@@ -19,8 +19,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public class UserRepositoryImpl implements UserRepository {
-
+    @Autowired
     private final BCryptPasswordEncoder passwordEncoder;
+    
     @Autowired
     private LocalSessionFactoryBean factory;
 

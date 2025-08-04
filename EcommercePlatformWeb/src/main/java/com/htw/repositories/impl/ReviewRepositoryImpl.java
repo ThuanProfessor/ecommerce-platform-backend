@@ -7,12 +7,16 @@ import java.util.Map;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.htw.pojo.Review;
 import com.htw.repositories.ReviewRepository;
 
 import jakarta.persistence.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
+@Transactional
 public class ReviewRepositoryImpl implements ReviewRepository{
 
     @Autowired

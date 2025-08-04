@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.htw.pojo.Payment;
 import com.htw.pojo.SaleOrder;
@@ -13,6 +14,7 @@ import com.htw.repositories.OrderRepository;
 import com.htw.repositories.PaymentRepository;
 import com.htw.services.PaymentService;
 
+@Service
 public class PaymentServiceImpl implements PaymentService {
 
      @Autowired
@@ -29,6 +31,17 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment getPaymentById(int id) {
         return this.paymentRepository.getPaymentById(id);
+    }
+
+
+    @Override
+    public Payment updatePayment(Payment payment) {
+        return this.paymentRepository.updatePayment(payment);
+    }
+
+    @Override
+    public void deletePayment(int id) {
+        this.paymentRepository.deletePayment(id);
     }
 
     @Override

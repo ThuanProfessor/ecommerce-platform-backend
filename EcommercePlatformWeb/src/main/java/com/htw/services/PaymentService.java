@@ -12,6 +12,10 @@ public interface PaymentService {
     
     Payment addPayment(Map<String, Object> paymentData);
     
+    Payment updatePayment(Payment payment);
+    
+    void deletePayment(int id);
+    
     Payment processWebhook(String payload);
     
     List<Payment> getPaymentHistory();

@@ -82,7 +82,11 @@ public class StoreRepositoryImpl implements StoreRepository {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("FROM Store s WHERE s.userId.username = :username", Store.class);
         query.setParameter("username", username);
-        return query.getSingleResult();
+        List<Store> stores = query.getResultList();
+        if (stores != null && !stores.isEmpty()) {
+            return stores.get(0);
+        }
+        return null;
     }
 
     

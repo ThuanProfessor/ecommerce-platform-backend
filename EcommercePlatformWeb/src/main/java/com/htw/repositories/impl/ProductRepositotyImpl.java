@@ -2,7 +2,7 @@ package com.htw.repositories.impl;
 
 import com.htw.pojo.Product;
 import com.htw.repositories.ProductRepository;
-import com.htw.repositories.Review;
+
 
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;

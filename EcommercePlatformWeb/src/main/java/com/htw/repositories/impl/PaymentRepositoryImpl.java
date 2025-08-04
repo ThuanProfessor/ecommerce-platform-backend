@@ -7,12 +7,19 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.Transactional;
 import org.hibernate.Session;
+
+
 import jakarta.persistence.Query;
 
 import com.htw.pojo.Payment;
 import com.htw.repositories.PaymentRepository;
+import org.springframework.stereotype.Repository;
 
+
+@Repository
+@Transactional
 public class PaymentRepositoryImpl implements PaymentRepository {
 
     @Autowired
@@ -64,5 +71,13 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         Query query = session.createQuery("FROM Payment", Payment.class);
         return query.getResultList();
     }
+
     
+    
+    @Override
+    public List<Payment> getPaymentHistory() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Payment ORDER BY createdDate DESC", Payment.class);
+        return query.getResultList();
+    }
 }
