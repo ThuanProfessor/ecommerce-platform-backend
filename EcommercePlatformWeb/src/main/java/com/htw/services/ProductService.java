@@ -1,6 +1,8 @@
 package com.htw.services;
 
 import com.htw.pojo.Product;
+import com.htw.pojo.Review;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,4 +23,5 @@ public interface ProductService {
      List<Product> getProductsByIds(List<Integer> productIds);
     
     List<Product> getProductsByStore(int storeId);
+    List<Review> getProductReviews(int productId);
 }

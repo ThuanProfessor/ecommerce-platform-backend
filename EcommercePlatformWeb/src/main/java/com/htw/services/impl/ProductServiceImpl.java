@@ -3,8 +3,11 @@ package com.htw.services.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.htw.pojo.Product;
+import com.htw.pojo.Review;
 import com.htw.repositories.ProductRepository;
 import com.htw.services.ProductService;
+import com.htw.services.ReviewService;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Autowired
     private Cloudinary cloudinary;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @Override
     public List<Product> getProducts(Map<String, String> params) {
@@ -64,6 +70,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductsByStore(int storeId) {
         return this.productRepository.getProductsByStore(storeId);
+    }
+
+    @Override
+    public List<Review> getProductReviews(int productId) {
+        return this.reviewService.getProductReviews(productId);
     }
 
 }
