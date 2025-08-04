@@ -6,15 +6,8 @@ package com.htw.repositories.impl;
 
 import com.htw.pojo.Store;
 import com.htw.repositories.StoreRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +33,22 @@ public class StoreRepositoryImpl implements StoreRepository {
         return query.getResultList();
     }
 
-    
+    @Override
+    public Store getStoreById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Store.class, id);
+    }
+
+    @Override
+    public Store addOrUpdateStore(Store store) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (store.getId() == null) {
+            s.persist(store);
+        } else {
+            s.merge(store);
+        }
+
+        return store;
+    }
+
 }

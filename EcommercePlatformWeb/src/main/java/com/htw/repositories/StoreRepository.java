@@ -13,7 +13,12 @@ import java.util.List;
  * @author nguye
  */
 public interface StoreRepository {
+
     @Query("SELECT s From Store s")
     List<Store> getStores();
+
+    Store addOrUpdateStore(Store store);
+
+    Store getStoreById(int id);
 
 }

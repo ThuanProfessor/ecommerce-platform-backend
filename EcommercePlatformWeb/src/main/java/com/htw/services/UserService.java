@@ -18,6 +18,10 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUser();
 
+    User getUserById(int id);
+
+    User addOrUpdateUserInfo(User user);
+
     User getUserByUsername(String username);
 
     User addUser(Map<String, String> params, MultipartFile avatar);

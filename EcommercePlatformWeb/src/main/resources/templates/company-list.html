@@ -1,0 +1,59 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Open Mall</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+<body>
+
+    <div th:replace="base :: header"></div>       
+
+    <div class="container mt-4">
+        <div id="content" th:fragment="content">
+            <div class="row">
+
+                <div class="text-center">  
+                    <h1>Quản lý doanh nghiệp/tiểu thương</h1>
+                    <p>Đây là trang quản lý các doanh nghiệp và tiểu thương của hệ thống Open Mall</p>
+                    <p>Bạn có thể <strong>thêm</strong> danh mục mới hoặc <strong>chỉnh sửa/xoá</strong> danh mục hiện tại</p>
+                </div>
+
+                <!--<a th:href="@{/categories/add}" class="btn btn-success mt-2">Thêm danh mục</a>-->
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th></th>
+                            <th>Tên doanh nghiệp/tiểu thương</th>
+                            <th>Thông tin liên hệ</th>
+                            <th>Loại hình</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="com : ${companies}">
+                            <td th:text="${com.id}"></td>
+                            <td>
+                                <img th:src="${com.avatar}" class="rounded" width="80" alt="Ảnh đại diện doanh nghiệp/tiểu thương"/>
+                            </td>
+                            <td th:text="${com.name}"></td>
+                            <td th:text="${com.tax}"></td>
+                            <td th:text="${com.type}"></td>
+                            <td>
+                                <a th:href="@{/}" class="btn btn-primary btn-sm">Edit</a>
+                                <a th:href="@{/}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>
+

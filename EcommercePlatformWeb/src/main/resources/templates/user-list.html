@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Danh sách người dùng</title>
+    <head>
+        <title>Danh sách người dùng</title>
     <th:block th:replace="base :: bootstrap"></th:block>
-  </head>
-  <body>
+</head>
+<body>
     <div th:replace="base :: header"></div>
     <div class="container mt-4">
-      <h2>Danh sách người dùng</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tên đăng nhập</th>
-            <th>Họ và tên</th>
-            <th>Số điện thoại</th>
-            <th>Vai trò</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.fullName}"></td>
-            <td th:text="${user.numberPhone}"></td>
-            <td th:text="${user.role}"></td>
+        <h2>Danh sách người dùng</h2>
+        
+         <a th:href="@{/users/add}" class="btn btn-success mt-2">Thêm người dùng mới</a>
+         
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ảnh đại diện</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ và tên</th>
+                    <th>Số điện thoại</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái tài khoản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td>
+                        <img th:src="${user.avatar}" class="rounded" width="80" alt="Ảnh đại diện"/>
+                    </td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.numberPhone}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td th:text="${user.isVerified ? 'Đã xác minh' : 'Chưa xác minh'}"></td>
 
-            <td>
-              <a th:href="@{/user/{id}(id=${user.id})}" class="btn btn-primary">Edit</a>
-              <a th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                    <td>
+                        <a th:href="@{'/users/' + ${user.id}}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div th:replace="base :: footer"></div>
-  </body>
+</body>
 </html>

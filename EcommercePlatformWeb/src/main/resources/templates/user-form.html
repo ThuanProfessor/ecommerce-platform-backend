@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Người dùng</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+
+<body>
+
+    <div th:replace="base :: header"></div>  
+
+    <div class="container text-center">
+        <h1 class="mt-2">QUẢN LÝ NGƯỜI DÙNG</h1>
+        <p>Bạn có thể thêm sản phẩm mới hoặc chỉnh sửa thông tin của người dùng</p> 
+    </div>
+
+    <div class="container">
+        <form  method="post" th:action="@{/users/save}" th:object="${user}" enctype="multipart/form-data">
+
+            <div class="mb-3 mt-3">
+                <label for="username" class="form-label">Tên người dùng (username): </label>
+                <input type="text" class="form-control" id="username" placeholder="Tên người dùng (username)" th:field="*{username}" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="fullName" class="form-label">Họ tên: </label>
+                <input type="text" class="form-control" id="fullName" placeholder="Họ tên" th:field="*{fullName}"  />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="numberPhone" class="form-label">Số điện thoại: </label>
+                <input type="text" class="form-control" id="numberPhone" placeholder="Số điện thoại" th:field="*{numberPhone}"  />
+            </div>
+            
+             <div class="mb-3 mt-3">
+                <label for="password" class="form-label">Mật khẩu: </label>
+                <input type="text" class="form-control" id="password" placeholder="Mật khẩu" th:field="*{password}"  />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="role" class="form-label">Vai trò: </label>
+                <select class="form-select" id="role" th:field="*{role}">
+                    <option th:each="r : ${roles}" 
+                            th:value="${r}" 
+                            th:text="${r}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="isVerified" th:field="*{isVerified}" />
+                <label class="form-check-label" for="isVerified">Kích hoạt tài khoản</label>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="avatar" class="form-label">Ảnh đại diện: </label>
+                <input type="file" class="form-control" th:field="*{file}"  />
+                <img th:if="${user.avatar != null}" th:src="${user.avatar}" width="200" />
+            </div>
+
+
+            <div class="mb-3 mt-3">
+                <input type="hidden" class="form-control" th:field="*{id}"  />
+                <input type="hidden" class="form-control" th:field="*{avatar}"  />
+                <button class="btn btn-success mt-1" type="submit">
+                    <span th:if="${user.id == null}">Thêm người dùng</span>
+                    <span th:unless="${user.id == null}">Cập nhật người dùng</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>
+
+

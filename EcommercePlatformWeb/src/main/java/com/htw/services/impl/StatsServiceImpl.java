@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class StatsServiceImpl implements StatsService {
+
     @Autowired
     private StatsRepository statsRepo;
 
@@ -24,7 +25,9 @@ public class StatsServiceImpl implements StatsService {
         return this.statsRepo.statsCategory();
     }
 
-    
+    @Override
+    public List<Object[]> statsRevenueByStore() {
+        return this.statsRepo.statsRevenueByStore();
+    }
 
-    
 }

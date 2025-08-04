@@ -9,12 +9,14 @@
 
     <div th:replace="base :: header"></div> 
 
-    <h1>Danh sách các cửa hàng</h1>
+    <h1 class="mt-2 text-center">Danh sách các cửa hàng</h1>
+
+    <a th:href="@{/stores/add}" class="btn btn-success mt-2">Thêm cửa hàng</a>
+
 
     <div class="container mt-4">
         <div id="content" th:fragment="content">
             <div th:if="${stores}" class="row">
-                <h2>Stores</h2>
                 <table class="table">
                     <thead>
                         <tr>
@@ -23,6 +25,7 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Created Date</th>
+                            <th>Chủ cửa hàng</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -35,8 +38,9 @@
                             <td th:text="${store.name}"></td>
                             <td th:text="${store.description}"></td>
                             <td th:text="${#dates.format(store.createdDate, 'dd-MM-yyyy')}"></td>
+                            <td th:text="${store.userId.username}"></td>
                             <td>
-                                <a th:href="@{/stores/edit/{id}(id=${store.id})}" class="btn btn-primary">Edit</a>
+                                <a th:href="@{'/stores/'+ ${store.id}}" class="btn btn-primary">Edit</a>
                                 <a th:href="@{/stores/delete/{id}(id=${store.id})}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>

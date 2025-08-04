@@ -2,6 +2,7 @@ package com.htw.repositories.impl;
 
 import com.htw.pojo.OrderDetail;
 import com.htw.pojo.Product;
+import com.htw.pojo.Store;
 import com.htw.repositories.StatsRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -33,11 +34,11 @@ public class StatsRepositoryImpl implements StatsRepository {
         Root root = q.from(OrderDetail.class);
         Join<OrderDetail, Product> join = root.join("productId", JoinType.RIGHT);
 
-        q.multiselect(join.get("id"), join.get("name"), 
-                      b.sum(b.prod(root.get("quantity"), root.get("unitPrice"))));
+        q.multiselect(join.get("id"), join.get("name"),
+                b.sum(b.prod(root.get("quantity"), root.get("unitPrice"))));
         q.groupBy(join.get("id"), join.get("name"));
         q.orderBy(b.desc(b.sum(b.prod(root.get("quantity"), root.get("unitPrice")))));
-        
+
         Query query = s.createQuery(q);
         return query.getResultList();
     }
@@ -51,19 +52,44 @@ public class StatsRepositoryImpl implements StatsRepository {
         Join<Product, Category> join = root.join("category", JoinType.INNER);
 
         q.multiselect(
-            join.get("id"),
-            join.get("name"),
-            b.count(root.get("id"))
+                join.get("id"),
+                join.get("name"),
+                b.count(root.get("id"))
         );
 
         q.groupBy(join.get("id"), join.get("name"));
         q.orderBy(b.desc((b.count(root.get("id")))));
-        
+
         Query query = s.createQuery(q);
 
         return query.getResultList();
     }
 
+    @Override
+    public List<Object[]> statsRevenueByStore() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root root = q.from(OrderDetail.class);
+        Join<OrderDetail, Product> productJoin = root.join("productId", JoinType.INNER);
+        System.err.println("join dau: " + productJoin.toString());
+        Join<Product, Store> storeJoin = productJoin.join("storeId");
+        System.err.println("Join 2 " + storeJoin);
 
-    
+        q.multiselect(storeJoin.get("id"),
+                storeJoin.get("name"),
+                b.sum(b.prod(root.get("unitPrice"), root.get("quantity"))));
+
+        System.err.println("q day: " + q);
+        q.groupBy(storeJoin.get("id"), storeJoin.get("name"));
+        Query query = s.createQuery(q);
+        System.err.println("query day: " + query);
+
+        System.err.println("get Result: " + query.getResultList());
+
+//        q.multiselect(storeJoin.get("name"))
+        return query.getResultList();
+
+    }
+
 }

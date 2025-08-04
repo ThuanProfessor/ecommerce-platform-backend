@@ -12,7 +12,13 @@ import java.util.List;
  * @author nguye
  */
 public interface StoreService {
+
     List<Store> getStores();
 
+    Store getStoreById(int id);
+
+    Store addOrUpdateStore(Store store);
+
     public void deleteStore(int id);
+
 }
