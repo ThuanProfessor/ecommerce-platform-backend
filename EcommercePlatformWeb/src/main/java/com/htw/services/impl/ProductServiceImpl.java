@@ -55,4 +55,15 @@ public class ProductServiceImpl implements ProductService {
         this.deleleProduct(id);
     }
 
+
+    @Override
+    public List<Product> getProductsByIds(List<Integer> productIds) {
+        return this.productRepository.getProductsByIds(productIds);
+    }
+
+    @Override
+    public List<Product> getProductsByStore(int storeId) {
+        return this.productRepository.getProductsByStore(storeId);
+    }
+
 }

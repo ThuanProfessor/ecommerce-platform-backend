@@ -4,8 +4,10 @@
  */
 package com.htw.services;
 
+import com.htw.pojo.Product;
 import com.htw.pojo.Store;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,4 +17,13 @@ public interface StoreService {
     List<Store> getStores();
 
     public void deleteStore(int id);
+
+     List<Store> getStores(Map<String, String> params);
+    
+    Store getStoreById(int id);
+    
+    Store createStore(Store store);
+    
+    List<Product> getStoreProducts(int storeId);
+    Store getMyStore();
 }

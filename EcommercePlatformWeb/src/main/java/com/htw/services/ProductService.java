@@ -17,4 +17,8 @@ public interface ProductService {
     Product addOrUpdateProduct(Product p);
 
     void deleleProduct(int id);
+
+     List<Product> getProductsByIds(List<Integer> productIds);
+    
+    List<Product> getProductsByStore(int storeId);
 }

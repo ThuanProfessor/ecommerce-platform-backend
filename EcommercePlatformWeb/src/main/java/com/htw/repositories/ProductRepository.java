@@ -18,5 +18,9 @@ public interface ProductRepository {
 
     void deleleProduct (int id);
 
+    List<Product> getProductsByIds(List<Integer> productIds);
+    
+    List<Product> getProductsByStore(int storeId);
+
   
 }

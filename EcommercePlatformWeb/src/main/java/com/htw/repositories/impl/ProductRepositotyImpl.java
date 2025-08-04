@@ -2,6 +2,8 @@ package com.htw.repositories.impl;
 
 import com.htw.pojo.Product;
 import com.htw.repositories.ProductRepository;
+import com.htw.repositories.Review;
+
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -114,6 +116,24 @@ public class ProductRepositotyImpl implements ProductRepository {
         Session session = this.factory.getObject().getCurrentSession();
         Product product = this.getProductById(id);
         session.remove(product);
+    }
+
+    @Override
+    public List<Product> getProductsByIds(List<Integer> productIds) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Product WHERE id IN :productIds", Product.class);
+        query.setParameter("productIds", productIds);
+        return query.getResultList();
+    }
+
+    
+
+    @Override
+    public List<Product> getProductsByStore(int storeId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Product WHERE storeId.id = :storeId", Product.class);
+        query.setParameter("storeId", storeId);
+        return query.getResultList();
     }
 
   
