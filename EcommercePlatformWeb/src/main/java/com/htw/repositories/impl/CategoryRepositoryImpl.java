@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategoryRepositoryImpl implements CategoryRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
+
+
     @Override
     public List<Category> getCates(){
        Session s = this.factory.getObject().getCurrentSession();
@@ -33,5 +35,29 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         
     }
 
+    @Override
+    public Category getCategoryById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Category.class, id);
+    }
     
+    @Override
+    public Category addOrUpdateCategory(Category category) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (category.getId() == null) {
+            s.save(category);
+        } else {
+            s.update(category);
+        }
+        return category;
+    }
+    
+    @Override
+    public void deleteCategory(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Category category = s.get(Category.class, id);
+        if (category != null) {
+            s.delete(category);
+        }
+    }
 }
