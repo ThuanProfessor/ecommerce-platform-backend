@@ -1,41 +1,51 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Open Mall Admin</title>
-    <th:block th:fragment="bootstrap">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </th:block>
+        <title>Đăng nhập</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .login-card {
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+    </style>
 </head>
 <body>
 
-    <div th:replace="base :: header"></div> 
+    <div th:replace="base :: header"></div>
 
-    <main class="container">
-        <h1 class="text-center text-info mt-3">Đăng nhập đi bro!</h1>
-        <form method="post" th:action="@{/login}">
-            <div class="form-floating mb-3 mt-3">
-                <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
-                <label for="username">Tên đăng nhập</label>
+    <div class="container">
+        <div class="login-card">
+            <h2 class="text-center text-primary mb-4">ĐĂNG NHẬP HỆ THỐNG</h2>
+            <form th:action="@{/login}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập..." required>
                 </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu..." required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                </div>                
+            </form>
+        </div>
+    </div>
 
-                <div class="form-floating mt-3 mb-3">
-                <input type="password" class="form-control" id="password" placeholder="Mật khẩu" name="password">
-                <label for="password">Mật khẩu</label>
-            </div>
+    <div th:replace="base :: footer"></div>
 
-            <div class="form-floating mt-3 mb-3">
-                <button type="submit" class="btn btn-info">Đăng nhập</button>
-            </div>
-        </form>
-
-    </main>
 </body>
 </html>
-
-
-
-    <div th:replace="base :: footer"></div>  
-
-

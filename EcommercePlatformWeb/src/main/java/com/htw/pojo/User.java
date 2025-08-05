@@ -13,10 +13,12 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -70,6 +72,7 @@ public class User implements Serializable {
     private String role;
     @Column(name = "is_verified")
     private Boolean isVerified;
+    
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Review> reviewSet;
@@ -82,10 +85,13 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToOne(mappedBy = "userId")
     private Store store;
+    
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
-
+ 
     public User(Integer id) {
         this.id = id;
     }
@@ -104,6 +110,14 @@ public class User implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public String getUsername() {

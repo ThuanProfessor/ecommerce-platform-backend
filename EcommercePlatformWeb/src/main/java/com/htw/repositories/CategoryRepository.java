@@ -12,8 +12,15 @@ import java.util.List;
  * @author nguye
  */
 public interface CategoryRepository {
+
     List<Category> getCates();
-    Category getCategoryById(int id);
+
+  
     Category addOrUpdateCategory(Category category);
     void deleteCategory(int id);
+
+
+    Category getCategoryById(int id);
+
+
 }

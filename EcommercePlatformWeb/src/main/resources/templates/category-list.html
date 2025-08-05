@@ -8,17 +8,20 @@
 
     <div th:replace="base :: header"></div>       
 
-    <div class="container mt-5">
-        <h1 class="text-center">Chào mừng đến với Open Mall</h1>
-        <p class="lead text-center">Chúng tôi luôn sẵn sàng phục vụ và hỗ trợ 24/24</p>            
-        <p class="lead text-center">Nếu thắc mắc hay cần hỗ trợ. Vui lòng liên hệ chúng tôi qua hotline: 0978 XXX 510</p>
-
-    </div>
-
     <div class="container mt-4">
+        <div class="text-center">  
+            <h1>Quản lý danh mục</h1>
+            <p>Đây là trang quản lý các danh mục của Open Mall</p>
+            <p>Bạn có thể <strong>thêm</strong> danh mục mới hoặc <strong>chỉnh sửa/xoá</strong> danh mục hiện tại</p>
+        </div>
+       
         <div id="content" th:fragment="content">
             <div th:if="${categories}" class="row">
-                <h2>Categories</h2>
+
+
+
+
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,7 +39,7 @@
                             <td th:text="${c.description}"></td>
                             <td th:text="${#dates.format(c.createdDate, 'dd-MM-yyyy')}"></td>
                             <td>
-                                <a th:href="@{/categories/edit/{id}(id=${c.id})}" class="btn btn-primary btn-sm">Edit</a>
+                                <a th:href="@{'/categories/' + ${c.id}}" class="btn btn-primary btn-sm">Edit</a>
                                 <a th:href="@{/categories/delete/{id}(id=${c.id})}" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
@@ -44,6 +47,7 @@
                 </table>
             </div>
         </div>
+         <a th:href="@{/categories/add}" class="btn btn-success mt-2">Thêm danh mục</a>
     </div>
 
 

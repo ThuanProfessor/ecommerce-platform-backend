@@ -14,16 +14,23 @@ import java.util.Map;
  * @author nguye
  */
 public interface StoreService {
-    List<Store> getStores();
+
+    
+
+    Store getStoreById(int id);
+
+    Store addOrUpdateStore(Store store);
 
     public void deleteStore(int id);
 
-     List<Store> getStores(Map<String, String> params);
-    
-    Store getStoreById(int id);
+
+    List<Store> getStores(Map<String, String> params);
+    List<Store> getStores(); 
+
     
     Store createStore(Store store);
     
     List<Product> getStoreProducts(int storeId);
     Store getMyStore();
+
 }

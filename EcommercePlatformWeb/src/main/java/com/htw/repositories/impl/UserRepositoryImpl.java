@@ -1,4 +1,3 @@
-
 package com.htw.repositories.impl;
 
 import com.htw.pojo.User;
@@ -39,15 +38,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByUsername(String username) {
-       Session s =this.factory.getObject().getCurrentSession();
+        Session s = this.factory.getObject().getCurrentSession();
 
-       Query q = s.createNamedQuery("User.findByUsername", User.class);
+        Query q = s.createNamedQuery("User.findByUsername", User.class);
 
-       q.setParameter("username", username);
+        q.setParameter("username", username);
 
-       return (User) q.getSingleResult();
+        return (User) q.getSingleResult();
     }
-
 
     @Override
     public boolean authenticate(String username, String password) {
@@ -70,6 +68,24 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = this.factory.getObject().getCurrentSession();
         s.merge(u);
         return u;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(User.class, id);
+    }
+
+    @Override
+    public User addOrUpdateUserInfo(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (user.getId() == null) {
+            s.persist(user);
+        } else {
+            s.merge(user);
         }
+
+        return user;
+    }
 
 }

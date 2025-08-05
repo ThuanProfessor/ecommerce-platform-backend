@@ -15,15 +15,11 @@ public class StatsController {
     @Autowired
     private StatsService statsService;
 
-    
-    
-    
-
     @GetMapping("/stats")
     public String stats(Model model) {
         model.addAttribute("productRevenues", statsService.statsRevenueByProduct());
         model.addAttribute("statsCategoryByCountProduct", statsService.statsCategory());
-
+        model.addAttribute("statsRevenueByStore", statsService.statsRevenueByStore());
         return "stats";
     }
 }

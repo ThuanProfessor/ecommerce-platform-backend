@@ -4,7 +4,6 @@
  */
 package com.htw.repositories.impl;
 
-
 import com.htw.pojo.Category;
 import com.htw.repositories.CategoryRepository;
 import jakarta.persistence.Query;
@@ -21,20 +20,22 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class CategoryRepositoryImpl implements CategoryRepository{
+public class CategoryRepositoryImpl implements CategoryRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
 
     @Override
-    public List<Category> getCates(){
-       Session s = this.factory.getObject().getCurrentSession();
+    public List<Category> getCates() {
+        Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Category", Category.class);
         return q.getResultList();
-         
-        
+
     }
 
+
+    
     @Override
     public Category getCategoryById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -60,4 +61,5 @@ public class CategoryRepositoryImpl implements CategoryRepository{
             s.remove(category);
         }
     }
+
 }

@@ -1,7 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Thống Kê</title>
+    <head>
+        <title>Thống Kê</title>
     <th:text th:replace="base :: bootstrap"></th:text>
 </head>
 
@@ -9,7 +9,28 @@
     <div th:replace="base::header"></div>
 
     <main class="container">
-    <h1>Thống kê sản phẩm</h1>
+        <h1>Thống kê theo cửa hàng</h1>
+
+        <div class="row">
+            <div class="col-md-5 col-6">
+                <table class="table">
+                    <tr>
+                        <th>Mã cửa hàng</th>
+                        <th>Tên cửa hàng</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                    <tr th:each="s: ${statsRevenueByStore}">
+                        <td th:text="${s[0]}"></td>
+                        <td th:text="${s[1]}"></td>
+                        <td th:text="${s[2]}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-7 col-6">
+                <canvas id="statsRevenueByStoreChart"></canvas>
+            </div>
+        </div>
+        <h1>Thống kê sản phẩm</h1>
         <div class="row">
             <div class="col-md-5 col-6">
                 <table class="table">
@@ -30,7 +51,7 @@
             </div>
         </div>
         <h1>Sản phẩm thuộc danh mục</h1>
-        
+
         <div class="row mt-5">
             <div class="col-md-5 col-6">
                 <table class="table">
@@ -63,59 +84,78 @@
 
     <script th:inline="javascript">
         window.onload = function () {
-            let stats = [[${productRevenues}]];
-            let data = stats.map(o => o[2]);
-            let labels = stats.map(o => o[1]);
-
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
-                type: 'bar',
+        let stats = [[${productRevenues}]];
+        let data = stats.map(o => o[2]);
+        let labels = stats.map(o => o[1]);
+        const ctx = document.getElementById('myChart');
+        new Chart(ctx, {
+        type: 'bar',
                 data: {
-                    labels: labels,
-                    datasets: [{
+                labels: labels,
+                        datasets: [{
                         label: '# Doanh thu',
-                        data: data,
-                        borderWidth: 1
-                    }]
+                                data: data,
+                                borderWidth: 1
+                        }]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                scales: {
+                y: {
+                beginAtZero: true
                 }
-            });
-
-            let statsCategory = [[${statsCategoryByCountProduct}]];
-            let cateLabels = statsCategory.map(c => c[1]);
-            let cateData = statsCategory.map(c => c[2]);
-
-            const ctx2 = document.getElementById('categoryChart');
-            new Chart(ctx2, {
-                type: 'pie',
+                }
+                }
+        });
+        let statsCategory = [[${statsCategoryByCountProduct}]];
+        let cateLabels = statsCategory.map(c => c[1]);
+        let cateData = statsCategory.map(c => c[2]);
+        const ctx2 = document.getElementById('categoryChart');
+        new Chart(ctx2, {
+        type: 'pie',
                 data: {
-                    labels: cateLabels,
-                    datasets: [{
+                labels: cateLabels,
+                        datasets: [{
                         label: '# Số lượng sản phẩm',
-                        data: cateData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(255, 159, 64, 0.5)',
-                            'rgba(255, 205, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(153, 102, 255, 0.5)',
-                            'rgba(201, 203, 207, 0.5)'
-                        ],
-                        borderColor: '#fff',
-                        borderWidth: 1
-                    }]
+                                data: cateData,
+                                backgroundColor: [
+                                        'rgba(255, 99, 132, 0.5)',
+                                        'rgba(255, 159, 64, 0.5)',
+                                        'rgba(255, 205, 86, 0.5)',
+                                        'rgba(75, 192, 192, 0.5)',
+                                        'rgba(54, 162, 235, 0.5)',
+                                        'rgba(153, 102, 255, 0.5)',
+                                        'rgba(201, 203, 207, 0.5)'
+                                ],
+                                borderColor: '#fff',
+                                borderWidth: 1
+                        }]
                 },
                 options: {
-                    responsive: true
+                responsive: true
                 }
-            });
+        });
+        let statsStore = [[${statsRevenueByStore}]];
+        let storeLabels = statsStore.map(s => s[1]);
+        let revenueStoreData = statsStore.map(s => s[2]);
+        const ctx3 = document.getElementById('statsRevenueByStoreChart');
+        new Chart(ctx3, {
+        type: 'bar',
+                data: {
+                labels: storeLabels,
+                        datasets: [{
+                        label: '# Doanh thu của cửa hàng',
+                                data: revenueStoreData,
+                                borderWidth: 1
+                        }]
+                },
+                options: {
+                scales: {
+                y: {
+                beginAtZero: true
+                }
+                }
+                }
+        });
         }
     </script>
 </body>

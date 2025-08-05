@@ -17,11 +17,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -62,15 +64,21 @@ public class Store implements Serializable {
     private Date createdDate;
     @JsonIgnore
     @OneToMany(mappedBy = "storeId")
+    
     private Set<Product> productSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
+    
     private Set<CateStore> cateStoreSet;
     
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne
+//    @JsonIgnore
     private User userId;
+
+    @Transient
+    private MultipartFile file;
 
     public Store() {
     }
@@ -173,5 +181,19 @@ public class Store implements Serializable {
     public String toString() {
         return "com.htw.pojo.Store[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
 }

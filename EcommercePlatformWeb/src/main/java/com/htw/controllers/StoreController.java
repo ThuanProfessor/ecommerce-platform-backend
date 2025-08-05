@@ -4,26 +4,55 @@
  */
 package com.htw.controllers;
 
+import com.htw.pojo.Store;
 import com.htw.services.StoreService;
+import com.htw.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
  * @author nguye
  */
 @Controller
-@RequestMapping("/stores")
 public class StoreController {
+
     @Autowired
     private StoreService storeService;
-    
-    @GetMapping("")
-    public String listStore(Model model){
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/stores")
+    public String listStore(Model model) {
         model.addAttribute("stores", storeService.getStores());
         return "store-list";
+    }
+
+    @GetMapping("/stores/add")
+    public String addStore(Model model) {
+        model.addAttribute("store", new Store());
+        model.addAttribute("users", this.userService.getUser());
+        return "store-form";
+    }
+
+    @PostMapping("/stores/save")
+    public String add(@ModelAttribute(value = "store") Store store) {
+        this.storeService.addOrUpdateStore(store);
+
+        return "redirect:/stores";
+    }
+
+    @GetMapping("/stores/{storeId}")
+    public String viewStoreDetail(Model model, @PathVariable(value = "storeId") int id) {
+        model.addAttribute("users", this.userService.getUser());
+        System.err.println(this.userService.getUser());
+        model.addAttribute("store", this.storeService.getStoreById(id));
+        return "store-form";
     }
 }

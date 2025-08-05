@@ -20,6 +20,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -51,12 +52,15 @@ public class Category implements Serializable {
     private String description;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date createdDate;
     @JsonIgnore
     @OneToMany(mappedBy = "categoryId")
+   
     private Set<Product> productSet;
-    @JsonIgnore
+   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+    @JsonIgnore
     private Set<CateStore> cateStoreSet;
 
     public Category() {

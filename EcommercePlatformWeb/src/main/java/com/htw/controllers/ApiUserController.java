@@ -2,6 +2,7 @@ package com.htw.controllers;
 
 import com.htw.pojo.User;
 import com.htw.services.UserService;
+import com.htw.utils.JwtUtils;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,16 +40,18 @@ public class ApiUserController {
     public ResponseEntity<?> login(@RequestBody User u) {
         if (this.userService.authenticate(u.getUsername(), u.getPassword())) {
             try {
+                String token = JwtUtils.generateToken(u.getUsername());
                 User user = this.userService.getUserByUsername(u.getUsername());
                 Map<String, Object> response = Map.of(
-                    "message", "Login successful",
-                    "user", Map.of(
-                        "id", user.getId(),
-                        "username", user.getUsername(),
-                        "fullName", user.getFullName(),
-                        "role", user.getRole(),
-                        "avatar", user.getAvatar()
-                    )
+                        "message", "Login successful",
+                        "token", token,
+                        "user", Map.of(
+                                "id", user.getId(),
+                                "username", user.getUsername(),
+                                "fullName", user.getFullName(),
+                                "role", user.getRole(),
+                                "avatar", user.getAvatar()
+                        )
                 );
                 return ResponseEntity.ok().body(response);
             } catch (Exception e) {
@@ -65,7 +68,9 @@ public class ApiUserController {
         return new ResponseEntity<>(this.userService.getUserByUsername(principal.getName()), HttpStatus.OK);
     }
 
-    @PostMapping("/register")
+    @PostMapping(path = "/register",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody Map<String, String> registerRequest) {
         try {
             Map<String, String> params = new HashMap<>();
@@ -77,13 +82,13 @@ public class ApiUserController {
             User newUser = userService.addUser(params, null);
 
             Map<String, Object> response = Map.of(
-                "message", "Thành công",
-                "user", Map.of(
-                    "id", newUser.getId(),
-                    "username", newUser.getUsername(),
-                    "fullName", newUser.getFullName(),
-                    "role", newUser.getRole()
-                )
+                    "message", "Thành công",
+                    "user", Map.of(
+                            "id", newUser.getId(),
+                            "username", newUser.getUsername(),
+                            "fullName", newUser.getFullName(),
+                            "role", newUser.getRole()
+                    )
             );
 
             return ResponseEntity.ok(response);
@@ -92,5 +97,7 @@ public class ApiUserController {
         }
     }
 
+
    
 }
+
