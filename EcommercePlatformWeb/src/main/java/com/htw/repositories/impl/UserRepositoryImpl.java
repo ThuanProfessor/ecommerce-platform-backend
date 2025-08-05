@@ -8,7 +8,7 @@ import jakarta.persistence.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
+
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(User u) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.update(u);
+        s.merge(u);
         return u;
         }
 
