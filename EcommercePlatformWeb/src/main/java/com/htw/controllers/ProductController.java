@@ -1,7 +1,9 @@
 package com.htw.controllers;
 
 import com.htw.pojo.Product;
+import com.htw.services.CategoryService;
 import com.htw.services.ProductService;
+import com.htw.services.StoreService;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -25,8 +27,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private StoreService storeService;
+
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping("/products")
     public String viewProduct(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("stores", this.storeService.getStores());
+        model.addAttribute("categories", this.categoryService.getCates());
         model.addAttribute("products", this.productService.getProducts(params));
         return "product";
     }
@@ -45,6 +55,7 @@ public class ProductController {
 
     @GetMapping("/products/{productId}")
     public String updateView(Model model, @PathVariable(value = "productId") int id) {
+        model.addAttribute("stores", this.storeService.getStores());
         model.addAttribute("product", this.productService.getProductById(id));
         return "product-form";
     }

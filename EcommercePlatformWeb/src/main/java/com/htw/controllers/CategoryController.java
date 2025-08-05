@@ -30,9 +30,9 @@ public class CategoryController {
         model.addAttribute("categories", this.cateSer.getCates());
         return "category-list";
     }
-    
+
     @GetMapping("/categories/add")
-    public String addView(Model model){
+    public String addView(Model model) {
         model.addAttribute("category", new Category());
         return "category-form";
     }
@@ -47,8 +47,8 @@ public class CategoryController {
     @GetMapping("/categories/{cateId}")
     public String viewCate(Model model, @PathVariable(value = "cateId") int id) {
         System.err.println(id);
-        model.addAttribute("category", this.cateSer.getCateById(id));
-        System.err.println("Category nè " + this.cateSer.getCateById(id));
+        model.addAttribute("category", this.cateSer.getCategoryById(id));
+        System.err.println("Category nè " + this.cateSer.getCategoryById(id));
         return "category-form";
     }
 

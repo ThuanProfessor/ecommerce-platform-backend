@@ -37,7 +37,7 @@ public class StoreController {
     @GetMapping("/stores/add")
     public String addStore(Model model) {
         model.addAttribute("store", new Store());
-        model.addAttribute("users", this.userService.getUser());
+        model.addAttribute("users", this.userService.getUserByRoleSeller());
         return "store-form";
     }
 
@@ -50,7 +50,7 @@ public class StoreController {
 
     @GetMapping("/stores/{storeId}")
     public String viewStoreDetail(Model model, @PathVariable(value = "storeId") int id) {
-        model.addAttribute("users", this.userService.getUser());
+        model.addAttribute("users", this.userService.getUserByRoleSeller());
         System.err.println(this.userService.getUser());
         model.addAttribute("store", this.storeService.getStoreById(id));
         return "store-form";

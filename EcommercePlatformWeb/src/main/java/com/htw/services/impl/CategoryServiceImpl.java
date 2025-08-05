@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
  * @author nguye
  */
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
+
     @Autowired
     private CategoryRepository cateRepo;
 
@@ -26,13 +27,18 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category getCateById(int id) {
-        return this.cateRepo.getCateById(id);
+    public Category getCategoryById(int id) {
+        return this.cateRepo.getCategoryById(id);
     }
 
     @Override
-    public Category addOrUpdateCategory(Category cate) {
-        return this.cateRepo.addOrUpdateCategory(cate);
+    public Category addOrUpdateCategory(Category category) {
+        return this.cateRepo.addOrUpdateCategory(category);
     }
-    
+
+    @Override
+    public void deleteCategory(int id) {
+        this.cateRepo.deleteCategory(id);
+    }
+
 }

@@ -18,6 +18,8 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUser();
 
+    List<User> getUserByRoleSeller();
+
     User getUserById(int id);
 
     User addOrUpdateUserInfo(User user);

@@ -6,6 +6,7 @@ package com.htw.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.htw.pojo.Product;
 import com.htw.pojo.Store;
 import com.htw.repositories.StoreRepository;
 import com.htw.services.StoreService;
@@ -16,6 +17,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,14 +30,14 @@ import org.springframework.stereotype.Service;
 public class StoreServiceImpl implements StoreService {
 
     @Autowired
-    private StoreRepository storeRepo;
+    private StoreRepository storeRepository;
 
     @Autowired
     private Cloudinary cloudinary;
 
     @Override
     public List<Store> getStores() {
-        return storeRepo.getStores();
+        return storeRepository.getStores();
     }
 
     @Override
@@ -42,8 +45,9 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+
     public Store getStoreById(int id) {
-        return this.storeRepo.getStoreById(id);
+        return this.storeRepository.getStoreById(id);
     }
 
     @Override
@@ -57,6 +61,28 @@ public class StoreServiceImpl implements StoreService {
                 Logger.getLogger(ProductServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return this.storeRepo.addOrUpdateStore(store);
+        return this.storeRepository.addOrUpdateStore(store);
+    }
+
+    @Override
+    public List<Store> getStores(Map<String, String> params) {
+        return this.storeRepository.getStores(params);
+    }
+
+    @Override
+    public Store createStore(Store store) {
+        return this.storeRepository.createStore(store);
+    }
+
+    @Override
+    public List<Product> getStoreProducts(int storeId) {
+        return this.storeRepository.getStoreProducts(storeId);
+    }
+
+    @Override
+    public Store getMyStore() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        return this.storeRepository.getStoreByUsername(username);
     }
 }

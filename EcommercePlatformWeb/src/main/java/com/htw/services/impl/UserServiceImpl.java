@@ -25,41 +25,41 @@ import java.util.logging.Logger;
 @Service("userDetailsService")
 @Transactional
 public class UserServiceImpl implements UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private Cloudinary cloudinary;
-    
+
     @Override
     public List<User> getUser() {
         return this.userRepository.getUsers();
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = this.getUserByUsername(username);
-        
+
         if (u == null) {
             throw new UsernameNotFoundException("Invalid username!");
         }
-        
+
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(u.getRole()));
-        
+
         return new org.springframework.security.core.userdetails.User(
                 u.getUsername(), u.getPassword(), authorities);
     }
-    
+
     @Override
     public User getUserByUsername(String username) {
         return this.userRepository.getUserByUsername(username);
     }
-    
+
     @Override
     public User addUser(Map<String, String> params, MultipartFile avatar) {
         User u = new User();
@@ -67,8 +67,13 @@ public class UserServiceImpl implements UserService {
         u.setPassword(this.passwordEncoder.encode(params.get("password")));
         u.setFullName(params.get("fullname"));
         u.setNumberPhone(params.get("number_phone"));
-        u.setRole("ROLE_USER");
-        
+        if (params.get("role").equals("ROLE_CUSTOMER")) {
+            u.setIsVerified(Boolean.TRUE);
+        } else {
+            u.setIsVerified(Boolean.FALSE);
+        }
+        u.setRole(params.get("role"));
+
         if (!avatar.isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -79,24 +84,24 @@ public class UserServiceImpl implements UserService {
         }
         return this.userRepository.addUser(u);
     }
-    
+
     @Override
     public boolean authenticate(String username, String password) {
         return this.userRepository.authenticate(username, password);
     }
-    
+
     @Override
     public User updateUser(User user) {
         return this.userRepository.updateUser(user);
     }
-    
+
     @Override
     public boolean changePassword(String username, String oldPassword, String newPassword) {
         User user = getUserByUsername(username);
         if (user == null) {
             return false;
         }
-        
+
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             return false;
         }
@@ -104,12 +109,12 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUser(user);
         return true;
     }
-    
+
     @Override
     public User getUserById(int id) {
         return this.userRepository.getUserById(id);
     }
-    
+
     @Override
     public User addOrUpdateUserInfo(User user) {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
@@ -124,5 +129,9 @@ public class UserServiceImpl implements UserService {
         }
         return this.userRepository.addOrUpdateUserInfo(user);
     }
-    
+
+    @Override
+    public List<User> getUserByRoleSeller() {
+        return this.userRepository.getUserByRoleSeller();
+    }
 }

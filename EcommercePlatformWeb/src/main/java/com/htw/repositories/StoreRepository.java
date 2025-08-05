@@ -4,9 +4,12 @@
  */
 package com.htw.repositories;
 
+import com.htw.pojo.Product;
 import com.htw.pojo.Store;
 import jakarta.data.repository.Query;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -20,5 +23,15 @@ public interface StoreRepository {
     Store addOrUpdateStore(Store store);
 
     Store getStoreById(int id);
+    
+    List<Store> getStores(Map<String, String> params);
+        
+    Store createStore(Store store);
+    
+    void deleteStore(int id);
+    
+    List<Product> getStoreProducts(int storeId);
+    
+    Store getStoreByUsername(String username);
 
 }

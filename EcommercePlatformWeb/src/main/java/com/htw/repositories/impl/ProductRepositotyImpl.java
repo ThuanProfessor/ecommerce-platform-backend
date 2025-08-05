@@ -2,6 +2,7 @@ package com.htw.repositories.impl;
 
 import com.htw.pojo.Product;
 import com.htw.repositories.ProductRepository;
+
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -47,8 +48,6 @@ public class ProductRepositotyImpl implements ProductRepository {
         //Filter
         if (params != null) {
 
-            System.err.println("Params nè" + params);
-
             List<Predicate> predicates = new ArrayList<>();
 
             String kw = params.get("kw");
@@ -64,7 +63,12 @@ public class ProductRepositotyImpl implements ProductRepository {
 
             String cateId = params.get("cateId");
             if (cateId != null && !cateId.isEmpty()) {
-                predicates.add(b.equal(root.get("category").as(Integer.class), cateId));
+                predicates.add(b.equal(root.get("categoryId").as(Integer.class), cateId));
+            }
+
+            String storeId = params.get(("storeId"));
+            if (storeId != null && !storeId.isEmpty()) {
+                predicates.add(b.equal(root.get("storeId").as(Integer.class), storeId));
             }
 
             q.where(predicates.toArray(Predicate[]::new));
@@ -108,7 +112,6 @@ public class ProductRepositotyImpl implements ProductRepository {
         return product;
     }
 
-    
     @Override
     public void deleleProduct(int id) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -116,8 +119,20 @@ public class ProductRepositotyImpl implements ProductRepository {
         session.remove(product);
     }
 
-  
+    @Override
+    public List<Product> getProductsByIds(List<Integer> productIds) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Product WHERE id IN :productIds", Product.class);
+        query.setParameter("productIds", productIds);
+        return query.getResultList();
+    }
 
-    
+    @Override
+    public List<Product> getProductsByStore(int storeId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Product WHERE storeId.id = :storeId", Product.class);
+        query.setParameter("storeId", storeId);
+        return query.getResultList();
+    }
 
 }

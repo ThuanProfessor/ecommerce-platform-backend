@@ -7,6 +7,8 @@ package com.htw.configs;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.htw.formatters.CategoryFormatter;
+import com.htw.formatters.StoreFormatter;
+import com.htw.formatters.UserFormatter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +46,8 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CategoryFormatter());
+        registry.addFormatter(new StoreFormatter());
+        registry.addFormatter(new UserFormatter());
     }
     
     
