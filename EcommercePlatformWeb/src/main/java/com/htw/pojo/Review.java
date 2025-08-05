@@ -1,5 +1,6 @@
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -56,14 +57,18 @@ public class Review implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @JsonIgnore
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Product productId;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reviewId")
     private Set<Review> reviewSet;
+    @JsonIgnore
     @JoinColumn(name = "review_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Review reviewId;
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;

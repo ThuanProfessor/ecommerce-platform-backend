@@ -19,6 +19,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Trung Hau
@@ -56,6 +58,7 @@ public class Payment implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @JsonIgnore
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @OneToOne
     private SaleOrder orderId;

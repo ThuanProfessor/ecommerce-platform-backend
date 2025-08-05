@@ -92,33 +92,5 @@ public class ApiUserController {
         }
     }
 
-    @PostMapping("/register-seller")
-    public ResponseEntity<?> registerSeller(@RequestBody Map<String, String> registerRequest) {
-        try {
-            Map<String, String> params = new HashMap<>();
-            params.put("username", registerRequest.get("username"));
-            params.put("password", registerRequest.get("password"));
-            params.put("fullname", registerRequest.get("fullName"));
-            params.put("number_phone", registerRequest.get("phoneNumber"));
-
-            User newUser = userService.addUser(params, null);
-       
-            newUser.setRole("ROLE_SELLER_PENDING");
-            userService.updateUser(newUser);
-
-            Map<String, Object> response = Map.of(
-                "message", "Chỉ seller mới được đăng ký",
-                "user", Map.of(
-                    "id", newUser.getId(),
-                    "username", newUser.getUsername(),
-                    "fullName", newUser.getFullName(),
-                    "role", newUser.getRole()
-                )
-            );
-
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Registration failed: " + e.getMessage()));
-        }
-    }
+   
 }

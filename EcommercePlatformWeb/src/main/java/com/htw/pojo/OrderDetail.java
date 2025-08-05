@@ -44,6 +44,7 @@ public class OrderDetail implements Serializable {
     @NotNull
     @Column(name = "quantity")
     private int quantity;
+    @JsonIgnore
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Product productId;

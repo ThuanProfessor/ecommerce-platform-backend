@@ -1,5 +1,6 @@
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -69,12 +70,16 @@ public class User implements Serializable {
     private String role;
     @Column(name = "is_verified")
     private Boolean isVerified;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Review> reviewSet;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<SaleOrder> saleOrderSet;
+    @JsonIgnore
     @OneToOne(mappedBy = "userId")
     private Company company;
+    @JsonIgnore
     @OneToOne(mappedBy = "userId")
     private Store store;
 

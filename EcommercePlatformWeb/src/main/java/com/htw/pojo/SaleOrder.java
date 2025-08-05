@@ -1,5 +1,6 @@
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -49,9 +50,11 @@ public class SaleOrder implements Serializable {
     @Size(max = 255)
     @Column(name = "note")
     private String note;
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
+    @JsonIgnore
     @OneToOne(mappedBy = "orderId")
     private Payment payment;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId")

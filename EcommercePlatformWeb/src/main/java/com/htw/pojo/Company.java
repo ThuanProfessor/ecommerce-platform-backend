@@ -15,6 +15,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Trung Hau
@@ -50,6 +52,7 @@ public class Company implements Serializable {
     @Size(max = 100)
     @Column(name = "type")
     private String type;
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne
     private User userId;

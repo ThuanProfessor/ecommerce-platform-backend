@@ -13,6 +13,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Trung Hau
@@ -30,9 +32,11 @@ public class CateStore implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @JsonIgnore
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category categoryId;
+    @JsonIgnore
     @JoinColumn(name = "store_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Store storeId;
