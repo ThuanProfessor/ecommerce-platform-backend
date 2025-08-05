@@ -1,5 +1,6 @@
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
@@ -68,7 +69,8 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "price")
     private BigDecimal price;
-
+    
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private Category category;

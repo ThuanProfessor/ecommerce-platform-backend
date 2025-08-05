@@ -45,9 +45,9 @@ public class CategoryRepositoryImpl implements CategoryRepository{
     public Category addOrUpdateCategory(Category category) {
         Session s = this.factory.getObject().getCurrentSession();
         if (category.getId() == null) {
-            s.save(category);
+            s.persist(category);
         } else {
-            s.update(category);
+            s.merge(category);
         }
         return category;
     }
@@ -57,7 +57,7 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         Session s = this.factory.getObject().getCurrentSession();
         Category category = s.get(Category.class, id);
         if (category != null) {
-            s.delete(category);
+            s.remove(category);
         }
     }
 }
