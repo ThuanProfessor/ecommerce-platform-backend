@@ -36,11 +36,6 @@ public class StoreServiceImpl implements StoreService {
     private Cloudinary cloudinary;
 
     @Override
-    public List<Store> getStores() {
-        return storeRepository.getStores();
-    }
-
-    @Override
     public void deleteStore(int id) {
     }
 
@@ -84,5 +79,10 @@ public class StoreServiceImpl implements StoreService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         return this.storeRepository.getStoreByUsername(username);
+    }
+
+    @Override
+    public List<Store> getStores() {
+        return this.storeRepository.getStores();
     }
 }

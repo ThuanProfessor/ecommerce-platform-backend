@@ -1,5 +1,6 @@
 package com.htw.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,11 +17,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -58,15 +61,22 @@ public class Review implements Serializable {
     private Date createdDate;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Product productId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reviewId")
+    @JsonIgnore
     private Set<Review> reviewSet;
     @JoinColumn(name = "review_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Review reviewId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private User userId;
+
+    @Transient
+    private MultipartFile file;
 
     public Review() {
     }
@@ -176,5 +186,19 @@ public class Review implements Serializable {
     public String toString() {
         return "com.htw.pojo.Review[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
 }

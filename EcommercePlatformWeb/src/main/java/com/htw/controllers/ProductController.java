@@ -43,6 +43,7 @@ public class ProductController {
 
     @GetMapping("/products/add")
     public String addView(Model model) {
+        model.addAttribute("stores", this.storeService.getStores());
         model.addAttribute("product", new Product());
         return "product-form";
     }

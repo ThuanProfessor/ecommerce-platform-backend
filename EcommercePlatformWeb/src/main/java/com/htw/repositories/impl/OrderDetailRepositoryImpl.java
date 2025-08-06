@@ -1,10 +1,10 @@
 package com.htw.repositories.impl;
 
-import com.htw.pojo.Company;
-import com.htw.repositories.CompanyRepository;
-import jakarta.persistence.Query;
+import com.htw.pojo.OrderDetail;
+import com.htw.repositories.OrderDetailRepository;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -16,29 +16,28 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class CompanyRepositoryImpl implements CompanyRepository {
+public class OrderDetailRepositoryImpl implements OrderDetailRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Company> listCompany() {
+    public List<OrderDetail> getAllOrderDetail(int idOder) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Company", Company.class);
+
+        Query q = s.createQuery("FROM OrderDetail WHERE orderId.id=: orderId", OrderDetail.class);
+
+        q.setParameter("orderId", idOder);
+
         return q.getResultList();
     }
 
     @Override
-    public Company addOrUpdateCompany(Company company) {
+    public OrderDetail updateQuantity(OrderDetail orderDetail) {
         Session s = this.factory.getObject().getCurrentSession();
 
-        if (company.getId() == null) {
-            s.persist(company);
-        } else {
-            s.merge(company);
-        }
-
-        return company;
+        s.merge(orderDetail);
+        return orderDetail;
     }
 
 }

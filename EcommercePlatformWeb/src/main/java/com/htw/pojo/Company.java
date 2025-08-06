@@ -11,9 +11,11 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -53,6 +55,9 @@ public class Company implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne
     private User userId;
+
+    @Transient
+    private MultipartFile file;
 
     public Company() {
     }
@@ -138,5 +143,19 @@ public class Company implements Serializable {
     public String toString() {
         return "com.htw.pojo.Company[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
 }

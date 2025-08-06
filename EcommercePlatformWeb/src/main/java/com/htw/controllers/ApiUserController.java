@@ -32,7 +32,6 @@ public class ApiUserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> create(@RequestParam Map<String, String> params,
             @RequestParam(value = "avatar") MultipartFile avatar) {
-        System.err.println("Data gui len: " + params);
         return new ResponseEntity<>(this.userService.addUser(params, avatar), HttpStatus.CREATED);
     }
 

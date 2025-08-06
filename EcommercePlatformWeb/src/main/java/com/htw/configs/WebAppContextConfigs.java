@@ -7,6 +7,8 @@ package com.htw.configs;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.htw.formatters.CategoryFormatter;
+import com.htw.formatters.OrderFormatter;
+import com.htw.formatters.ProductFormatter;
 import com.htw.formatters.StoreFormatter;
 import com.htw.formatters.UserFormatter;
 import org.springframework.context.annotation.Bean;
@@ -28,18 +30,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-        "com.htw.controllers",
-        "com.htw.repositories",
-        "com.htw.services"
+    "com.htw.controllers",
+    "com.htw.repositories",
+    "com.htw.services"
 })
-public class WebAppContextConfigs implements WebMvcConfigurer{
+public class WebAppContextConfigs implements WebMvcConfigurer {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+
     @Bean
-    public StandardServletMultipartResolver multipartResolver(){
+    public StandardServletMultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
 
@@ -48,15 +51,13 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
         registry.addFormatter(new CategoryFormatter());
         registry.addFormatter(new StoreFormatter());
         registry.addFormatter(new UserFormatter());
+        registry.addFormatter(new OrderFormatter());
+        registry.addFormatter(new ProductFormatter());
     }
-    
-    
-    
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
     }
-    
+
 }
-
-

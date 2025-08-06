@@ -18,20 +18,21 @@ import java.util.Map;
 public interface StoreRepository {
 
     @Query("SELECT s From Store s")
-    List<Store> getStores();
 
     Store addOrUpdateStore(Store store);
 
     Store getStoreById(int id);
-    
+
     List<Store> getStores(Map<String, String> params);
-        
+
+    List<Store> getStores();
+
     Store createStore(Store store);
-    
+
     void deleteStore(int id);
-    
+
     List<Product> getStoreProducts(int storeId);
-    
+
     Store getStoreByUsername(String username);
 
 }

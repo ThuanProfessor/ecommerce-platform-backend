@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public interface StoreService {
 
-    List<Store> getStores();
-
     Store getStoreById(int id);
 
     Store addOrUpdateStore(Store store);
 
     public void deleteStore(int id);
+
+    List<Store> getStores();
 
     List<Store> getStores(Map<String, String> params);
 

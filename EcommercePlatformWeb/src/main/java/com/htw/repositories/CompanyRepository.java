@@ -10,4 +10,7 @@ import java.util.List;
 public interface CompanyRepository {
 
     List<Company> listCompany();
+
+    Company addOrUpdateCompany(Company company);
+
 }

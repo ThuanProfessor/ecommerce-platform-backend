@@ -7,7 +7,13 @@ package com.htw.repositories.impl;
 import com.htw.pojo.Store;
 import com.htw.pojo.Product;
 import com.htw.repositories.StoreRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.Session;
@@ -28,14 +34,6 @@ public class StoreRepositoryImpl implements StoreRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Store> getStores() {
-        Session session = this.factory.getObject().getCurrentSession();
-        Query query = session.createQuery("FROM Store", Store.class);
-
-        return query.getResultList();
-    }
-
-    @Override
     public Store getStoreById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Store.class, id);
@@ -45,6 +43,7 @@ public class StoreRepositoryImpl implements StoreRepository {
     public Store addOrUpdateStore(Store store) {
         Session s = this.factory.getObject().getCurrentSession();
         if (store.getId() == null) {
+            store.setCreatedDate(new Date());
             s.persist(store);
         } else {
             s.merge(store);
@@ -56,7 +55,24 @@ public class StoreRepositoryImpl implements StoreRepository {
     @Override
     public List<Store> getStores(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
-        Query query = session.createQuery("FROM Store", Store.class);
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Store> q = b.createQuery(Store.class);
+        Root root = q.from(Store.class);
+        q.select(root);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
+            }
+
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
+        Query query = session.createQuery(q);
+
         return query.getResultList();
     }
 
@@ -92,5 +108,13 @@ public class StoreRepositoryImpl implements StoreRepository {
             return stores.get(0);
         }
         return null;
+    }
+
+    @Override
+    public List<Store> getStores() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Store", Store.class);
+
+        return q.getResultList();
     }
 }

@@ -73,8 +73,8 @@
                                 <td class="text-center" th:text="${product.active} ? '✅' : '❌' "></td>
                                 <td class="text-center" th:text="${product.storeId.name}"></td>
                                 <td>
-                                    <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Edit</a>
-                                    <a th:href="@{/stores/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
+                                    <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Chỉnh sửa</a>
+                                    <button th:onclick="'deleteProduct(\'' + @{/api/products/} + ${product.id} + '\')'" class="btn btn-danger">Xoá</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -88,6 +88,8 @@
 
 
     <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>
