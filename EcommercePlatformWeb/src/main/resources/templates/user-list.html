@@ -8,9 +8,28 @@
     <div th:replace="base :: header"></div>
     <div class="container mt-4">
         <h2>Danh sách người dùng</h2>
+
+        <form th:action="@{/users}">
+            <div class="mb-3 mt-3">
+                <input type="text" class="form-control" name="username" placeholder="Nhập username..." />
+            </div>
+            <div class="mb-3 mt-3">
+                <input type="text" class="form-control" name="fullName" placeholder="Nhập họ tên" />
+            </div>
+            <div class="mb-3 mt-3">
+                <select name="role" class="form-select">
+                    <option value="">-- Vai trò --</option>
+                    <option th:each="role : ${roles}" th:value="${role.key}" th:text="${role.value}"></option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <button class="btn btn-info" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+
         
-       
-         
+
+
         <table class="table">
             <thead>
                 <tr>
@@ -30,7 +49,7 @@
                     <td th:text="${user.username}"></td>
                     <td th:text="${user.fullName}"></td>
                     <td th:text="${user.numberPhone}"></td>
-                    <td th:text="${user.role}"></td>
+                    <td th:text="${roles[user.role]}"></td>
                     <td th:text="${user.isVerified ? 'Đã xác minh' : 'Chưa xác minh'}"></td>
 
                     <td>

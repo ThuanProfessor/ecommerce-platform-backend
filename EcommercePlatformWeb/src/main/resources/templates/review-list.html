@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Danh sách đánh giá</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">TẤT CẢ ĐÁNH GIÁ</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Người đánh giá</th>
+                        <th>Sản phẩm</th>
+                        <th>Số sao</th>
+                        <th>Nội dung</th>
+                        <th>Ảnh</th>
+                        <th>Ngày đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="review : ${reviews}">
+                        <td th:text="${review.userId.fullName}">Tên người dùng</td>
+                        <td th:text="${review.productId.name}">Tên sản phẩm</td>
+                        <td>
+                            <span th:text="${review.rate} + ' ⭐'"></span>
+                        </td>
+                        <td th:text="${review.content}">Nội dung đánh giá</td>
+                        <td>
+                            <img th:if="${review.image != null}" th:src="${review.image}" alt="Ảnh đánh giá" width="80" class="img-thumbnail" />
+                            <span th:if="${review.image == null}" class="text-muted">Không có ảnh</span>
+                        </td>
+                        <td th:text="${#dates.format(review.createdDate, 'dd/MM/yyyy HH:mm')}">Ngày</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="base :: footer"></div>
+</body>
+</html>

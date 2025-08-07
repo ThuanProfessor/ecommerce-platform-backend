@@ -18,9 +18,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public class UserRepositoryImpl implements UserRepository {
+
     @Autowired
     private final BCryptPasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -86,6 +87,15 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return user;
+    }
+
+    @Override
+    public List<User> getUserByRoleSeller() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE role=: role");
+        q.setParameter("role", "ROLE_SELLER");
+
+        return q.getResultList();
     }
 
 }

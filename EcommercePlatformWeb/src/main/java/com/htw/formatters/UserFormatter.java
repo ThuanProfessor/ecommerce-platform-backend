@@ -9,7 +9,7 @@ import org.springframework.format.Formatter;
  *
  * @author Trung Hau
  */
-public class UserFormatters implements Formatter<User> {
+public class UserFormatter implements Formatter<User> {
 
     @Override
     public String print(User user, Locale locale) {

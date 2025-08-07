@@ -30,9 +30,9 @@ public class CategoryController {
         model.addAttribute("categories", this.cateSer.getCates());
         return "category-list";
     }
-    
+
     @GetMapping("/categories/add")
-    public String addView(Model model){
+    public String addView(Model model) {
         model.addAttribute("category", new Category());
         return "category-form";
     }

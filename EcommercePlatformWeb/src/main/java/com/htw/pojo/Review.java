@@ -17,11 +17,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -60,18 +62,25 @@ public class Review implements Serializable {
     @JsonIgnore
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+
     private Product productId;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reviewId")
+
     private Set<Review> reviewSet;
     @JsonIgnore
     @JoinColumn(name = "review_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+
     private Review reviewId;
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+
     private User userId;
+
+    @Transient
+    private MultipartFile file;
 
     public Review() {
     }
@@ -181,5 +190,19 @@ public class Review implements Serializable {
     public String toString() {
         return "com.htw.pojo.Review[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
 }

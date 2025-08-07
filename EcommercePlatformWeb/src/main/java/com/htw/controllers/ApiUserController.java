@@ -4,7 +4,6 @@ import com.htw.pojo.User;
 import com.htw.services.UserService;
 import com.htw.utils.JwtUtils;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +77,7 @@ public class ApiUserController {
             params.put("password", registerRequest.get("password"));
             params.put("fullname", registerRequest.get("fullName"));
             params.put("number_phone", registerRequest.get("phoneNumber"));
+            params.put("role", registerRequest.get("role"));
 
             User newUser = userService.addUser(params, null);
 

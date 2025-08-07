@@ -7,6 +7,7 @@ package com.htw.controllers;
 import com.htw.pojo.Store;
 import com.htw.services.StoreService;
 import com.htw.services.UserService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -29,15 +31,15 @@ public class StoreController {
     private UserService userService;
 
     @GetMapping("/stores")
-    public String listStore(Model model) {
-        model.addAttribute("stores", storeService.getStores());
+    public String listStore(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("stores", storeService.getStores(params));
         return "store-list";
     }
 
     @GetMapping("/stores/add")
     public String addStore(Model model) {
         model.addAttribute("store", new Store());
-        model.addAttribute("users", this.userService.getUser());
+        model.addAttribute("users", this.userService.getUserByRoleSeller());
         return "store-form";
     }
 
@@ -50,7 +52,7 @@ public class StoreController {
 
     @GetMapping("/stores/{storeId}")
     public String viewStoreDetail(Model model, @PathVariable(value = "storeId") int id) {
-        model.addAttribute("users", this.userService.getUser());
+        model.addAttribute("users", this.userService.getUserByRoleSeller());
         System.err.println(this.userService.getUser());
         model.addAttribute("store", this.storeService.getStoreById(id));
         return "store-form";

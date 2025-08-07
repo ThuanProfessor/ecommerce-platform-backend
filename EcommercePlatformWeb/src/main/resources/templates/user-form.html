@@ -31,18 +31,18 @@
                 <label for="numberPhone" class="form-label">Số điện thoại: </label>
                 <input type="text" class="form-control" id="numberPhone" placeholder="Số điện thoại" th:field="*{numberPhone}"  />
             </div>
-            
-             <div class="mb-3 mt-3">
+
+            <div class="mb-3 mt-3">
                 <label for="password" class="form-label">Mật khẩu: </label>
-                <input type="text" class="form-control" id="password" placeholder="Mật khẩu" th:field="*{password}"  />
+                <input type="text" class="form-control" id="password" placeholder="Mật khẩu" th:field="*{password}" />
             </div>
 
             <div class="mb-3 mt-3">
                 <label for="role" class="form-label">Vai trò: </label>
                 <select class="form-select" id="role" th:field="*{role}">
                     <option th:each="r : ${roles}" 
-                            th:value="${r}" 
-                            th:text="${r}">
+                            th:value="${r.key}" 
+                            th:text="${r.value}">
                     </option>
                 </select>
             </div>

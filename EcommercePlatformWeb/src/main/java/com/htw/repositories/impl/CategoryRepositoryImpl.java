@@ -35,6 +35,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
 
+
     
     @Override
     public Category getCategoryById(int id) {
@@ -53,6 +54,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         return category;
     }
     
+
     @Override
     public void deleteCategory(int id) {
         Session s = this.factory.getObject().getCurrentSession();

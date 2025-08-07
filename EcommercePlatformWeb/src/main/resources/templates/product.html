@@ -12,7 +12,7 @@
         <h1 class="mt-2">QUẢN LÝ SẢN PHẨM</h1>
         <p>Bạn có thể thêm sản phẩm mới hoặc chỉnh sửa thông tin của sản phẩm</p>
 
-        
+
 
         <form th:action="@{/products}">
             <div class="mb-3 mt-3">
@@ -28,8 +28,19 @@
                     <div class="mb-3 mt-3">
                         <input type="text" class="form-control" name="toPrice" placeholder="Đến" />
                     </div>
-
                 </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <select name="storeId" class="form-select">
+                    <option value="">-- Chọn cửa hàng --</option>
+                    <option th:each="s : ${stores}" th:value="${s.id}" th:text="${s.name}"></option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <select name="cateId" class="form-select">
+                    <option value="">-- Chọn danh mục --</option>
+                    <option th:each="cate : ${categories}" th:value="${cate.id}" th:text="${cate.name}"></option>
+                </select>
             </div>
             <div class="mb-3 mt-3">
                 <button class="btn btn-info" type="submit">Tìm kiếm</button>
@@ -47,6 +58,7 @@
                                 <th>Mô tả</th>
                                 <th>Giá</th>
                                 <th>Kích hoạt</th>
+                                <th>Tên cửa hàng<th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -59,14 +71,15 @@
                                 <td th:text="${product.description}"></td>
                                 <td th:text="${product.price} + ' VNĐ'"></td>
                                 <td class="text-center" th:text="${product.active} ? '✅' : '❌' "></td>
+                                <td class="text-center" th:text="${product.storeId.name}"></td>
                                 <td>
-                                    <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Edit</a>
-                                    <a th:href="@{/stores/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
+                                    <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary">Chỉnh sửa</a>
+                                    <button th:onclick="'deleteProduct(\'' + @{/api/products/} + ${product.id} + '\')'" class="btn btn-danger">Xoá</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    
+
                 </div>
             </div>
             <a th:href="@{/products/add}" class="btn btn-success mt-2">➕ Thêm sản phẩm</a>
@@ -75,6 +88,8 @@
 
 
     <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

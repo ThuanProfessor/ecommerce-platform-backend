@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.htw.services.UserService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -20,15 +20,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private List<String> roles = List.of(
-            "ROLE_ADMIN",
-            "ROLE_STAFF",
-            "ROLE_CUSTOMER",
-            "ROLE_SELLER"
+    private Map<String, String> roles = Map.of(
+            "ROLE_ADMIN", "Quản trị viên",
+            "ROLE_STAFF", "Nhân viên",
+            "ROLE_CUSTOMER", "Khách hàng",
+            "ROLE_SELLER", "Người bán"
     );
 
     @GetMapping("/users")
     public String listUser(Model model) {
+        model.addAttribute("roles", this.roles);
         model.addAttribute("users", userService.getUser());
         return "user-list";
     }

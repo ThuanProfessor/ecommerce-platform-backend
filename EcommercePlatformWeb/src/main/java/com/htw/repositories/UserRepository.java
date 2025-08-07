@@ -14,10 +14,12 @@ import com.htw.pojo.User;
 public interface UserRepository {
 
     User getUserById(int id);
-    
+
     User addOrUpdateUserInfo(User user);
 
     List<User> getUsers();
+
+    List<User> getUserByRoleSeller();
 
     User getUserByUsername(String username);
 

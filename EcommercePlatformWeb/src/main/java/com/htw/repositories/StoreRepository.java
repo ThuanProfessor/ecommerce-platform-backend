@@ -18,10 +18,11 @@ import java.util.Map;
 public interface StoreRepository {
 
     @Query("SELECT s From Store s")
-    List<Store> getStores();
+
 
 
     List<Store> getStores(Map<String, String> params);
+    List<Store> getStores();
     
     Store getStoreById(int id);
     
@@ -34,6 +35,7 @@ public interface StoreRepository {
     Store getStoreByUsername(String username);
 
     Store addOrUpdateStore(Store store);
+
 
 
 }

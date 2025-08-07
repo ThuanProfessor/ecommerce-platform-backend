@@ -11,23 +11,21 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Mã đơn hàng</th>
+                    <th>Tên người mua</th>
                     <th>Ngày tạo</th>
                     <th>Ghi chú</th>
-                    <th>Người dùng</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"></td>
-                    <td
-                        th:text="${#dates.format(order.createdDate, 'dd-MM-yyyy')}"
-                        ></td>
-                    <td th:text="${order.note}"></td>
                     <td th:text="${order.userId.fullName}"></td>
+                    <td th:text="${#dates.format(order.createdDate, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${order.note}"></td>
 
                     <td>
-                        <a th:href="@{/order/{id}(id=${order.id})}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/order-detail/{id}(id=${order.id})}" class="btn btn-primary">Edit</a>
                         <a th:href="@{/order/delete/{id}(id=${order.id})}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>

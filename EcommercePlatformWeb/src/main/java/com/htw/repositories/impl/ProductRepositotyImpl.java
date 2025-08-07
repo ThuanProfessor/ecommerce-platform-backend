@@ -3,7 +3,6 @@ package com.htw.repositories.impl;
 import com.htw.pojo.Product;
 import com.htw.repositories.ProductRepository;
 
-
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -49,8 +48,6 @@ public class ProductRepositotyImpl implements ProductRepository {
         //Filter
         if (params != null) {
 
-            System.err.println("Params nè" + params);
-
             List<Predicate> predicates = new ArrayList<>();
 
             String kw = params.get("kw");
@@ -66,7 +63,12 @@ public class ProductRepositotyImpl implements ProductRepository {
 
             String cateId = params.get("cateId");
             if (cateId != null && !cateId.isEmpty()) {
-                predicates.add(b.equal(root.get("category").as(Integer.class), cateId));
+                predicates.add(b.equal(root.get("categoryId").as(Integer.class), cateId));
+            }
+
+            String storeId = params.get(("storeId"));
+            if (storeId != null && !storeId.isEmpty()) {
+                predicates.add(b.equal(root.get("storeId").as(Integer.class), storeId));
             }
 
             q.where(predicates.toArray(Predicate[]::new));
@@ -110,7 +112,6 @@ public class ProductRepositotyImpl implements ProductRepository {
         return product;
     }
 
-    
     @Override
     public void deleleProduct(int id) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -126,8 +127,6 @@ public class ProductRepositotyImpl implements ProductRepository {
         return query.getResultList();
     }
 
-    
-
     @Override
     public List<Product> getProductsByStore(int storeId) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -135,9 +134,5 @@ public class ProductRepositotyImpl implements ProductRepository {
         query.setParameter("storeId", storeId);
         return query.getResultList();
     }
-
-  
-
-    
 
 }

@@ -15,12 +15,14 @@ public interface CategoryRepository {
 
     List<Category> getCates();
 
-  
+
     Category addOrUpdateCategory(Category category);
+
     void deleteCategory(int id);
 
 
+
     Category getCategoryById(int id);
-
-
 }
+
+

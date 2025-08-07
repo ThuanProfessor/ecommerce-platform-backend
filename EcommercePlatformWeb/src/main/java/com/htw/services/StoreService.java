@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface StoreService {
 
-    
+
 
     Store getStoreById(int id);
 
@@ -24,13 +24,15 @@ public interface StoreService {
     public void deleteStore(int id);
 
 
+
     List<Store> getStores(Map<String, String> params);
     List<Store> getStores(); 
 
     
-    Store createStore(Store store);
-    
-    List<Product> getStoreProducts(int storeId);
-    Store getMyStore();
 
+    Store createStore(Store store);
+
+    List<Product> getStoreProducts(int storeId);
+
+    Store getMyStore();
 }

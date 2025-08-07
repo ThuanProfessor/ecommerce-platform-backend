@@ -5,10 +5,14 @@
 package com.htw.services.impl;
 
 
+
 import com.htw.pojo.Product;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+
+
+
 
 import com.htw.pojo.Store;
 import com.htw.repositories.StoreRepository;
@@ -18,8 +22,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -40,8 +46,6 @@ public class StoreServiceImpl implements StoreService {
     @Autowired
     private Cloudinary cloudinary;
 
-  
-
     @Override
     public void deleteStore(int id) {
     }
@@ -51,6 +55,12 @@ public class StoreServiceImpl implements StoreService {
         return this.storeRepository.getStores(params);
     }
 
+    @Override
+    public Store getStoreById(int id) {
+        return this.storeRepository.getStoreById(id);
+
+    }
+
     
     @Override
     public List<Store> getStores() {
@@ -58,9 +68,20 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Store getStoreById(int id) {
-        return this.storeRepository.getStoreById(id);
+    public Store addOrUpdateStore(Store store) {
+        if (!store.getFile().isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(store.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                store.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(ProductServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return this.storeRepository.addOrUpdateStore(store);
     }
+
+    
 
     @Override
     public Store createStore(Store store) {
@@ -79,23 +100,13 @@ public class StoreServiceImpl implements StoreService {
         return this.storeRepository.getStoreByUsername(username);
     }
 
+
     
 
    
 
-    @Override
-    public Store addOrUpdateStore(Store store) {
-        if (!store.getFile().isEmpty()) {
-            try {
-                Map res = cloudinary.uploader().upload(store.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                store.setAvatar(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(ProductServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return this.storeRepository.addOrUpdateStore(store);
-    }
+
+
 
 
 }
