@@ -50,7 +50,7 @@ public class ApiCartController {
     }
 
     @PostMapping("/{userId}/add")
-    public ResponseEntity<?> addCart(@PathVariable String userId, @RequestBody Map<String, Object> request){
+    public ResponseEntity<?> addCart(@PathVariable("userId") String userId, @RequestBody Map<String, Object> request){
         try{
             int productId = (Integer) request.get("productId");
             int quantity = (Integer) request.get("quantity");
