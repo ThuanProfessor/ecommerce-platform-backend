@@ -17,7 +17,8 @@ public interface UserRepository {
 
     User addOrUpdateUserInfo(User user);
 
-    List<User> getUsers();
+    List<User> getUsers(Map<String, String> params);
+    List<User> getUser();
 
     List<User> getUserByRoleSeller();
 

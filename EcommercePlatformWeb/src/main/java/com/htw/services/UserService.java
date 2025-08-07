@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UserService extends UserDetailsService {
 
     List<User> getUser();
+    List<User> getUsers(Map<String, String> params);
 
     List<User> getUserByRoleSeller();
 

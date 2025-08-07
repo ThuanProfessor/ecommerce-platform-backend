@@ -7,6 +7,7 @@ import com.htw.repositories.StatsRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
@@ -35,8 +36,7 @@ public class StatsRepositoryImpl implements StatsRepository {
         Root root = q.from(OrderDetail.class);
         Join<OrderDetail, Product> join = root.join("productId", JoinType.RIGHT);
 
-        q.multiselect(join.get("id"), join.get("name"),
-                b.sum(b.prod(root.get("quantity"), root.get("unitPrice"))));
+        q.multiselect(join.get("id"), join.get("name"), b.sum(b.prod(root.get("quantity"), root.get("unitPrice"))));
         q.groupBy(join.get("id"), join.get("name"));
         q.orderBy(b.desc(b.sum(b.prod(root.get("quantity"), root.get("unitPrice")))));
 
@@ -52,11 +52,7 @@ public class StatsRepositoryImpl implements StatsRepository {
         Root<Product> root = q.from(Product.class);
         Join<Product, Category> join = root.join("category", JoinType.INNER);
 
-        q.multiselect(
-                join.get("id"),
-                join.get("name"),
-                b.count(root.get("id"))
-        );
+        q.multiselect( join.get("id"), join.get("name"), b.count(root.get("id")));
 
         q.groupBy(join.get("id"), join.get("name"));
         q.orderBy(b.desc((b.count(root.get("id")))));
@@ -77,9 +73,7 @@ public class StatsRepositoryImpl implements StatsRepository {
         Join<Product, Store> storeJoin = productJoin.join("storeId");
         System.err.println("Join 2 " + storeJoin);
 
-        q.multiselect(storeJoin.get("id"),
-                storeJoin.get("name"),
-                b.sum(b.prod(root.get("unitPrice"), root.get("quantity"))));
+        q.multiselect(storeJoin.get("id"), storeJoin.get("name"),  b.sum(b.prod(root.get("unitPrice"), root.get("quantity"))));
 
         System.err.println("q day: " + q);
         q.groupBy(storeJoin.get("id"), storeJoin.get("name"));
@@ -88,9 +82,66 @@ public class StatsRepositoryImpl implements StatsRepository {
 
         System.err.println("get Result: " + query.getResultList());
 
-//        q.multiselect(storeJoin.get("name"))
+
         return query.getResultList();
 
+    }
+
+    @Override
+    public List<Object[]> statsRevenueByMonth() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<OrderDetail> root = q.from(OrderDetail.class);
+        Join<OrderDetail, com.htw.pojo.SaleOrder> orderJoin = root.join("orderId");
+
+
+        Expression<Integer> monthExp = b.function("month", Integer.class, orderJoin.get("createdDate"));
+        Expression<Integer> yearExp = b.function("year", Integer.class, orderJoin.get("createdDate"));
+
+        q.multiselect(monthExp, yearExp, b.sum(b.prod(root.get("unitPrice"), root.get("quantity"))));
+        q.groupBy(yearExp, monthExp);
+        q.orderBy(b.asc(yearExp), b.asc(monthExp));
+
+        return s.createQuery(q).getResultList();
+    }
+
+ 
+    @Override
+    public List<Object[]> statsRevenueByQuarter() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<OrderDetail> root = q.from(OrderDetail.class);
+        Join<OrderDetail, com.htw.pojo.SaleOrder> orderJoin = root.join("orderId");
+
+        Expression<Integer> quarterExp = b.function("quarter", Integer.class, orderJoin.get("createdDate"));
+        Expression<Integer> yearExp = b.function("year", Integer.class, orderJoin.get("createdDate"));
+
+        q.multiselect(quarterExp, yearExp, b.sum(b.prod(root.get("unitPrice"), root.get("quantity"))));
+        q.groupBy(yearExp, quarterExp);
+        q.orderBy(b.asc(yearExp), b.asc(quarterExp));
+
+        return s.createQuery(q).getResultList();
+    }
+
+
+    
+    @Override
+    public List<Object[]> statsRevenueByYear() {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        Root<OrderDetail> root = q.from(OrderDetail.class);
+        Join<OrderDetail, com.htw.pojo.SaleOrder> orderJoin = root.join("orderId");
+
+        Expression<Integer> yearExp = b.function("year", Integer.class, orderJoin.get("createdDate"));
+
+        q.multiselect(yearExp, b.sum(b.prod(root.get("unitPrice"), root.get("quantity"))));
+        q.groupBy(yearExp);
+        q.orderBy(b.asc(yearExp));
+
+        return s.createQuery(q).getResultList();
     }
 
 }

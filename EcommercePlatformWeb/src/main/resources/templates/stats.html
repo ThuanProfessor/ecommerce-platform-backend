@@ -75,6 +75,57 @@
                 <canvas id="categoryChart"></canvas>
             </div>
         </div>
+
+        <h1>Thống kê doanh thu theo tháng</h1>
+        <table>
+            <tr>
+                <th>Tháng</th>
+                <th>Năm</th>
+                <th>Doanh thu</th>
+
+            </tr>
+                <tr th:each="row : ${byMonth}">
+                <td th:text="${row[0]}"></td>
+                <td th:text="${row[1]}"></td>
+                <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}"></td>
+            </tr>
+        </table>
+        <div class="col-md-7 col-6">
+                <canvas id="statsMonthByChart"></canvas>
+            </div>
+
+        <h2>Thống kê doanh thu theo quý</h2>
+        <table>
+            <tr>
+                <th>Quý</th>
+                <th>Năm</th>
+                <th>Doanh thu</th>
+            </tr>
+            <tr th:each="row : ${byQuarter}">
+                <td th:text="${row[0]}"></td>
+                <td th:text="${row[1]}"></td>
+                <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}"></td>
+            </tr>
+        </table>
+        <div class="col-md-7 col-6">
+                <canvas id="statsYearByChart"></canvas>
+            </div>
+
+        <h2>Thống kê doanh thu theo năm</h2>
+        <table>
+            <tr>
+                <th>Năm</th>
+                <th>Doanh thu</th>
+            </tr>
+            <tr th:each="row : ${byYear}">
+                <td th:text="${row[0]}"></td>
+                <td th:text="${#numbers.formatDecimal(row[1], 0, 'COMMA', 0, 'POINT')}"></td>
+            </tr>
+        </table>
+        <div class="col-md-7 col-6">
+                <canvas id="statsCharterByChart"></canvas>
+            </div>
+
     </main>
 
     <div th:replace="base :: footer"></div>
@@ -155,6 +206,80 @@
                 }
                 }
         });
+
+               let statsMonth = [[${byMonth}]];
+        let monthLabels = statsMonth.map(row => row[1] + '-' + row[0]);
+        let monthData = statsMonth.map(row => row[2]);
+        const ctxMonth = document.getElementById('statsMonthByChart');
+        new Chart(ctxMonth, {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Doanh thu theo tháng',
+                    data: monthData,
+                    backgroundColor: '#3498db'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+
+
+        let statsQuarter = [[${byQuarter}]];
+        let quarterLabels = statsQuarter.map(row => 'Q' + row[0] + '-' + row[1]);
+        let quarterData = statsQuarter.map(row => row[2]);
+        const ctxQuarter = document.getElementById('statsYearByChart');
+        new Chart(ctxQuarter, {
+            type: 'bar',
+            data: {
+                labels: quarterLabels,
+                datasets: [{
+                    label: 'Doanh thu theo quý',
+                    data: quarterData,
+                    backgroundColor: '#e67e22'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        //
+        let statsYear = [[${byYear}]];
+        let yearLabels = statsYear.map(row => row[0]);
+        let yearData = statsYear.map(row => row[1]);
+        const ctxYear = document.getElementById('statsCharterByChart');
+        new Chart(ctxYear, {
+            type: 'bar',
+            data: {
+                labels: yearLabels,
+                datasets: [{
+                    label: 'Doanh thu theo năm',
+                    data: yearData,
+                    backgroundColor: '#2ecc71'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+
         }
     </script>
 </body>
