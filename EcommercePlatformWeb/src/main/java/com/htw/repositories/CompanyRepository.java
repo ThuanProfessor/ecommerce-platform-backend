@@ -11,6 +11,10 @@ public interface CompanyRepository {
 
     List<Company> listCompany();
 
+    Company getCompanyById(int id);
+
+    Company getCompanyByUsername(String username);
+
     Company addOrUpdateCompany(Company company);
 
 }

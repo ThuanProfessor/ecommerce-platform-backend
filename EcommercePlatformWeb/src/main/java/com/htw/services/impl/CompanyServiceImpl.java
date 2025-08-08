@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,6 +55,33 @@ public class CompanyServiceImpl implements CompanyService {
             }
         }
         return this.companyRepo.addOrUpdateCompany(company);
+    }
+
+    @Override
+    public Company getCompanyByUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        System.err.println("username: " + username);
+        return this.companyRepo.getCompanyByUsername(username);
+    }
+
+    @Override
+    public Company addOrUpdateCompany(Company company) {
+        if (!company.getFile().isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(company.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                company.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(ProductServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return this.companyRepo.addOrUpdateCompany(company);
+    }
+
+    @Override
+    public Company getCompanyById(int id) {
+        return this.companyRepo.getCompanyById(id);
     }
 
 }

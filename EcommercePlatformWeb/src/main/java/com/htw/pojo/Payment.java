@@ -57,9 +57,9 @@ public class Payment implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Size(max = 100)
-    @Column(name = "order_code") 
-    private String orderCode;
+//    @Size(max = 100)
+//    @Column(name = "order_code") 
+//    private String orderCode;
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -69,14 +69,14 @@ public class Payment implements Serializable {
     @OneToOne
     private SaleOrder orderId;
 
-    public String getOrderCode() {
-        return orderCode;
-    }
-
-    public void setOrderCode(String orderCode) {
-        this.orderCode = orderCode;
-    }
-    
+//    public String getOrderCode() {
+//        return orderCode;
+//    }
+//
+//    public void setOrderCode(String orderCode) {
+//        this.orderCode = orderCode;
+//    }
+//    
     public Payment() {
     }
 

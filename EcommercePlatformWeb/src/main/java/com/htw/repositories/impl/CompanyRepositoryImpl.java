@@ -41,4 +41,24 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         return company;
     }
 
+    @Override
+    public Company getCompanyByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        System.err.println(username);
+        Query q = s.createQuery("FROM Company WHERE userId.username = :username", Company.class);
+        q.setParameter("username", username);
+        List<Company> list = q.getResultList();
+        System.err.println(list);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+
+    @Override
+    public Company getCompanyById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Company.class, id);
+    }
+
 }

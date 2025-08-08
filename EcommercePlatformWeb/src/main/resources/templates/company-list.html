@@ -26,8 +26,9 @@
                             <th>Mã</th>
                             <th></th>
                             <th>Tên doanh nghiệp/tiểu thương</th>
-                            <th>Thông tin liên hệ</th>
+                            <th>Mã số thuế</th>
                             <th>Loại hình</th>
+                            <th>Tên người đại diện</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,9 +40,10 @@
                             <td th:text="${com.name}"></td>
                             <td th:text="${com.tax}"></td>
                             <td th:text="${com.type}"></td>
+                            <td th:text="${com.userId.fullName} +' (' + ${com.userId.username} + ')' "></td>
                             <td>
-                                <a th:href="@{/}" class="btn btn-primary btn-sm">Edit</a>
-                                <a th:href="@{/}" class="btn btn-danger btn-sm">Delete</a>
+                                <a th:href="@{'/companies/' + ${com.id}}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
+                                <a th:href="@{/}" class="btn btn-danger btn-sm">Xoá</a>
                             </td>
                         </tr>
                     </tbody>

@@ -38,6 +38,11 @@
             </div>
 
             <div class="mb-3 mt-3">
+                <label for="price" class="form-label">Ngày tạo: </label>
+                <input type="datetime-local" id="createdDate" class="form-control" th:field="*{createdDate}"  />
+            </div>
+
+            <div class="mb-3 mt-3">
                 <label for="avatar" class="form-label">Ảnh đại diện cửa hàng: </label>
                 <input type="file" class="form-control" th:field="*{file}"  />
                 <img th:if="${store.avatar != null}" th:src="${store.avatar}" width="200" />

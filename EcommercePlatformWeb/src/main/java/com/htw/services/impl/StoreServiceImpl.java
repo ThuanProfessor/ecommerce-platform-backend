@@ -4,16 +4,9 @@
  */
 package com.htw.services.impl;
 
-
-
 import com.htw.pojo.Product;
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-
-
-
-
 import com.htw.pojo.Store;
 import com.htw.repositories.StoreRepository;
 import com.htw.services.StoreService;
@@ -21,12 +14,8 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +50,6 @@ public class StoreServiceImpl implements StoreService {
 
     }
 
-    
     @Override
     public List<Store> getStores() {
         return this.storeRepository.getStores();
@@ -81,8 +69,6 @@ public class StoreServiceImpl implements StoreService {
         return this.storeRepository.addOrUpdateStore(store);
     }
 
-    
-
     @Override
     public Store createStore(Store store) {
         return this.storeRepository.createStore(store);
@@ -99,14 +85,5 @@ public class StoreServiceImpl implements StoreService {
         String username = auth.getName();
         return this.storeRepository.getStoreByUsername(username);
     }
-
-
-    
-
-   
-
-
-
-
 
 }

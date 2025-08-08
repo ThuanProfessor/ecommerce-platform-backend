@@ -23,6 +23,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -61,16 +62,17 @@ public class Store implements Serializable {
     private String description;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date createdDate;
     @JsonIgnore
     @OneToMany(mappedBy = "storeId")
-    
+
     private Set<Product> productSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
-    
+
     private Set<CateStore> cateStoreSet;
-    
+
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne
