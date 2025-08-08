@@ -80,4 +80,25 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         Query query = session.createQuery("FROM Payment ORDER BY createdDate DESC", Payment.class);
         return query.getResultList();
     }
+    
+    @Override
+    public Payment save(Payment payment) {
+        Session session = this.factory.getObject().getCurrentSession();
+        if (payment.getId() == null) {
+            session.persist(payment);
+        } else {
+            session.merge(payment);
+        }
+        return payment;
+    }
+    
+    
+    @Override
+    public Payment findByOrderCode(String orderCode) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM Payment WHERE orderCode = :orderCode", Payment.class);
+        query.setParameter("orderCode", orderCode);
+        List<Payment> results = query.getResultList();
+        return results.isEmpty() ? null : results.get(0);
+    }
 }

@@ -19,4 +19,11 @@ public interface PaymentService {
     Payment processWebhook(String payload);
     
     List<Payment> getPaymentHistory();
+
+    Map<String, Object> createVNPayPayment(Map<String, Object> request);
+    
+    Payment processVNPayCallback(Map<String, String> callbackParams);
+    
+    Payment getPaymentByOrderId(String orderId);
+    Map<String, Object> getPaymentStatus(String orderId);
 }

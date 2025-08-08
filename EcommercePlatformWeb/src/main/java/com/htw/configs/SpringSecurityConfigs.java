@@ -102,4 +102,20 @@ public class SpringSecurityConfigs {
 
         return source;
     }
+
+
+    //vnpay
+    @Bean
+    public VNPayConfig vnPayConfig() {
+        VNPayConfig config = new VNPayConfig();
+        config.setTmnCode("ZCLPDHUS");
+        config.setHashSecret("9NJLQF95551EHKJ8DTALDNOVTZSPKXTK");
+        config.setPaymentUrl("https://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
+        config.setReturnUrl("http://localhost:8080/EcommercePlatformWeb/api/payments/vnpay/callback");
+        config.setIpnUrl("http://localhost:8080/EcommercePlatformWeb/api/payments/vnpay/ipn");
+        config.setCommand("pay");
+        config.setCurrCode("VND");
+        config.setLocale("vn");
+        return config;
+    }
 }

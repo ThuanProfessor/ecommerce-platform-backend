@@ -18,4 +18,8 @@ public interface PaymentRepository {
     List<Payment> getPayments(Map<String, String> params);
 
     List<Payment> getPaymentHistory();
+    
+    Payment save(Payment payment);
+    
+    Payment findByOrderCode(String orderCode);
 }

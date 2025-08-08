@@ -1,5 +1,6 @@
 package com.htw.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +39,7 @@ public class ApiPaymentController {
         return new ResponseEntity<>(this.paymentService.getPaymentById(id), HttpStatus.OK);
     }
 
-     @PostMapping("/payments")
+    @PostMapping("/payments")
     public ResponseEntity<Payment> create(@RequestBody Map<String, Object> paymentData) {
         return new ResponseEntity<>(this.paymentService.addPayment(paymentData), HttpStatus.CREATED);
     }
@@ -62,5 +64,52 @@ public class ApiPaymentController {
     @GetMapping("/payments/history")
     public ResponseEntity<List<Payment>> getPaymentHistory() {
         return new ResponseEntity<>(this.paymentService.getPaymentHistory(), HttpStatus.OK);
+    }
+
+    @PostMapping("/payments/vnpay/create")
+    public ResponseEntity<Map<String, Object>> createVNPayPayment(@RequestBody Map<String, Object> request) {
+        Map<String, Object> response = paymentService.createVNPayPayment(request);
+        if ("ERROR".equals(response.get("status"))) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @PostMapping("/payments/vnpay/callback")
+    public ResponseEntity<Payment> handleVNPayCallback(@RequestParam Map<String, String> callbackParams) {
+        try {
+            Payment payment = paymentService.processVNPayCallback(callbackParams);
+            return new ResponseEntity<>(payment, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @GetMapping("/payments/vnpay/status/{orderId}")
+    public ResponseEntity<Map<String, Object>> getVNPayPaymentStatus(@PathVariable String orderId) {
+        Map<String, Object> result = paymentService.getPaymentStatus(orderId);
+        if ("NOT_FOUND".equals(result.get("status"))) {
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        } else if ("ERROR".equals(result.get("status"))) {
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/payments/vnpay/verify")
+    public ResponseEntity<Map<String, Object>> verifyVNPayPayment(@RequestBody Map<String, String> verifyParams) {
+        try {
+            Map<String, Object> result = paymentService.getPaymentStatus(verifyParams.get("orderId"));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, Object> errorResult = new HashMap<>();
+            errorResult.put("status", "ERROR");
+            errorResult.put("message", "Verification failed: " + e.getMessage());
+
+
+            return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+        }
     }
 }

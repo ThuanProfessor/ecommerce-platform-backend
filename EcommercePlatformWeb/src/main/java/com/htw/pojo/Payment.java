@@ -52,9 +52,15 @@ public class Payment implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "type")
     private String type;
+
     @Size(max = 50)
     @Column(name = "status")
     private String status;
+
+    @Size(max = 100)
+    @Column(name = "order_code") 
+    private String orderCode;
+
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -63,6 +69,14 @@ public class Payment implements Serializable {
     @OneToOne
     private SaleOrder orderId;
 
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+    
     public Payment() {
     }
 
