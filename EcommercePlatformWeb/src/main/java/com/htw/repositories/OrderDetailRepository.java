@@ -12,5 +12,7 @@ public interface OrderDetailRepository {
     List<OrderDetail> getAllOrderDetail(int idOder);
 
     OrderDetail updateQuantity(OrderDetail orderDetail);
+    
+    OrderDetail addOrderDetail(OrderDetail od);
 
 }

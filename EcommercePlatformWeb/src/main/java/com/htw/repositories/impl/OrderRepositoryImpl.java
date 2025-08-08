@@ -78,6 +78,19 @@ public class OrderRepositoryImpl implements OrderRepository {
         query.setParameter("username", username);
         return query.getResultList();
     }
+    
+    @Override
+    public SaleOrder addOrder(SaleOrder order) {
+        Session s = factory.getObject().getCurrentSession();
+        s.persist(order); 
+        return order;
+    }
+
+    @Override
+    public void updateOrder(SaleOrder order) {
+        Session s = factory.getObject().getCurrentSession();
+        s.merge(order); 
+    }
 
     //Nhaps
    

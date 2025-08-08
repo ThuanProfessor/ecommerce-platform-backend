@@ -39,5 +39,13 @@ public class OrderDetailRepositoryImpl implements OrderDetailRepository {
         s.merge(orderDetail);
         return orderDetail;
     }
+    
+    @Override
+    public OrderDetail addOrderDetail(OrderDetail od) {
+        Session s = factory.getObject().getCurrentSession();
+        s.persist(od); 
+        return od;
+    }
+    
 
 }

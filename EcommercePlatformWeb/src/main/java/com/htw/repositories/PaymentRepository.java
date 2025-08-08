@@ -22,4 +22,6 @@ public interface PaymentRepository {
     Payment save(Payment payment);
     
     Payment findByOrderCode(String orderCode);
+    
+    List<Payment> getPaymentsByUserId(int userId);
 }

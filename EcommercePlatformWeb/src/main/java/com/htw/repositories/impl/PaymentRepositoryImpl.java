@@ -10,8 +10,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.Transactional;
 import org.hibernate.Session;
 
-
-import jakarta.persistence.Query;
+import org.hibernate.query.Query;
 
 import com.htw.pojo.Payment;
 import com.htw.repositories.PaymentRepository;
@@ -100,5 +99,16 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         query.setParameter("orderCode", orderCode);
         List<Payment> results = query.getResultList();
         return results.isEmpty() ? null : results.get(0);
+    }
+
+    @Override
+    public List<Payment> getPaymentsByUserId(int userId) {
+       Session s = this.factory.getObject().getCurrentSession();
+       
+       Query<Payment> query = s.createQuery("FROM Payment p JOIN p.orderId o WHERE o.userId.id = :userId ORDER BY p.createdDate DESC", Payment.class);
+
+       query.setParameter("userId", userId);
+
+       return query.getResultList();
     }
 }

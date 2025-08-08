@@ -12,8 +12,10 @@ public interface OrderRepository {
     List<SaleOrder> getOrders();
 
     List<SaleOrder> getOrders(Map<String, String> params);
+    SaleOrder addOrder(SaleOrder order);
     
     SaleOrder getOrderById(int id);
+    void updateOrder(SaleOrder order);
     
     SaleOrder createOrder(SaleOrder order);
     

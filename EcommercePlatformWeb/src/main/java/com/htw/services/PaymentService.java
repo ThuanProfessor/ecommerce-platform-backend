@@ -26,4 +26,6 @@ public interface PaymentService {
     
     Payment getPaymentByOrderId(String orderId);
     Map<String, Object> getPaymentStatus(String orderId);
+
+    List<Payment> getUserPaymentHistory();
 }

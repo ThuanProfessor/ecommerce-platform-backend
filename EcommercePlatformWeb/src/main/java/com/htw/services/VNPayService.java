@@ -3,9 +3,7 @@ package com.htw.services;
 import java.util.Map;
 
 public interface VNPayService {
-    Map<String, Object> createPaymentUrl(Map<String, Object> request);
-    boolean verifyPaymentResponse(Map<String, String> responseParams);
-    String generatePaymentUrl(Map<String, Object> request);
-    String createSignature(String inputData);
-    Map<String, Object> processPaymentCallback(Map<String, String> callbackParams);
+    String createPaymentUrl(String orderId, long amountVnd, String orderInfo,
+                        String returnUrl, String ipnUrl, String locale, String clientIp) throws Exception;
+    boolean verifySignature(Map<String, String> allParams);
 }

@@ -50,6 +50,12 @@ public class SaleOrder implements Serializable {
     @Size(max = 255)
     @Column(name = "note")
     private String note;
+    @Size(max = 50)
+    @Column(name = "status")
+    private String status;
+    
+    
+    
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -80,6 +86,8 @@ public class SaleOrder implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    
 
     public Date getCreatedDate() {
         return createdDate;
@@ -103,6 +111,14 @@ public class SaleOrder implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Payment getPayment() {

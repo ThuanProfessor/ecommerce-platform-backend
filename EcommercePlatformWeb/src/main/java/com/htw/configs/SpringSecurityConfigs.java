@@ -55,8 +55,9 @@ public class SpringSecurityConfigs {
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers("/", "/home").authenticated()
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/payments/**").permitAll()
                         // 
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/**").authenticated()
+//                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/products").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,
                                 "/products/**").hasAnyRole("USER", "ADMIN")
@@ -89,17 +90,13 @@ public class SpringSecurityConfigs {
     }
 
     private CorsConfigurationSource corsConfigurationSource() {
-         CorsConfiguration config = new CorsConfiguration();
-
-        config.setAllowedOrigins(List.of("http://localhost:3000/")); 
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://127.0.0.1:3000"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        config.setExposedHeaders(List.of("Authorization"));
-        config.setAllowCredentials(true); 
-
+        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-
         return source;
     }
 
@@ -111,7 +108,7 @@ public class SpringSecurityConfigs {
         config.setTmnCode("ZCLPDHUS");
         config.setHashSecret("9NJLQF95551EHKJ8DTALDNOVTZSPKXTK");
         config.setPaymentUrl("https://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
-        config.setReturnUrl("http://localhost:8080/EcommercePlatformWeb/api/payments/vnpay/callback");
+        config.setReturnUrl("http://localhost:3000/payment/callback");
         config.setIpnUrl("http://localhost:8080/EcommercePlatformWeb/api/payments/vnpay/ipn");
         config.setCommand("pay");
         config.setCurrCode("VND");

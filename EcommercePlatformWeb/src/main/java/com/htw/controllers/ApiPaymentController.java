@@ -1,3 +1,5 @@
+
+
 package com.htw.controllers;
 
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.htw.pojo.Payment;
 import com.htw.services.PaymentService;
+import com.htw.services.VNPayService;
 
 @RestController
 @RequestMapping("/api")
@@ -28,6 +31,9 @@ import com.htw.services.PaymentService;
 public class ApiPaymentController {
     @Autowired
     private PaymentService paymentService;
+    
+    @Autowired
+    private VNPayService vnPayService;
 
     @GetMapping("/payments")
     public ResponseEntity<List<Payment>> list() {
@@ -112,4 +118,44 @@ public class ApiPaymentController {
             return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @GetMapping("/payments/vnpay/return")
+    public ResponseEntity<?> handleVNPayReturn(@RequestParam Map<String, String> params) {
+        try {
+            Payment payment = paymentService.processVNPayCallback(params);
+            Map<String, Object> body = new HashMap<>();
+            body.put("status", payment.getStatus());
+            body.put("orderId", payment.getOrderCode());
+            return ResponseEntity.ok(body);
+        } catch (Exception e) {
+            Map<String, Object> body = new HashMap<>();
+            body.put("status", "ERROR");
+            body.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(body);
+        }
+    }
+    
+    @GetMapping("/payments/vnpay/ipn")
+    public ResponseEntity<?> handleVNPayIpn(@RequestParam Map<String, String> params) {
+        try {
+            // Idempotent update bên trong service
+            paymentService.processVNPayCallback(params);
+
+            Map<String, String> ok = new HashMap<>();
+            ok.put("RspCode", "00");
+            ok.put("Message", "Confirm Success");
+            return ResponseEntity.ok(ok);
+        } catch (Exception e) {
+            Map<String, String> err = new HashMap<>();
+            err.put("RspCode", "99");
+            err.put("Message", "Unknown error");
+            return ResponseEntity.ok(err);
+        }
+    }
+
+    @GetMapping("/payments/user/history")
+    public ResponseEntity<List<Payment>> getUserPaymentHistory(){
+        return new ResponseEntity<>(this.paymentService.getUserPaymentHistory(), HttpStatus.OK);
+    }
+    
 }
