@@ -29,7 +29,7 @@
 
             <div class="mb-3 mt-3">
                 <label for="user" class="form-label">Người quản lý cửa hàng:</label>
-                <select class="form-select" id="user" th:field="*{userId}">
+                <select class="form-select" id="userId" th:field="*{userId}">
                     <option th:each="user : ${users}" 
                             th:value="${user.id}" 
                             th:text="${user.username}">

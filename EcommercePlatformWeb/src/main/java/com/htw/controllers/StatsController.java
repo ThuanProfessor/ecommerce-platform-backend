@@ -39,6 +39,10 @@ public class StatsController {
         if (month != null && quarter == null && year == null) {
             model.addAttribute("statsRevenueAllStoreByMonth", statsRepo.statsRevenueAllStoreByMonth(month));
         }
+
+        if (quarter != null && year != null) {
+            model.addAttribute("statsRevenueAllStoreByQuarterAndYear", statsRepo.statsRevenueAllStoreByQuarterAndYear(quarter, year));
+        }
         model.addAttribute("productRevenues", statsService.statsRevenueByProduct());
         model.addAttribute("statsCategoryByCountProduct", statsService.statsCategory());
         model.addAttribute("statsRevenueByStore", statsService.statsRevenueByStore());

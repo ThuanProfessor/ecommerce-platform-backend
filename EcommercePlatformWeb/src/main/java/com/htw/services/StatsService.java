@@ -10,5 +10,9 @@ public interface StatsService {
 
     List<Object[]> statsRevenueByStore();
 
+    List<Object[]> statsRevenueStoreByUsername();
+
     List<Object[]> statsRevenueAllStoreByMonth(Integer month);
+
+    List<Object[]> statsRevenueAllStoreByQuarterAndYear(Integer quarter, Integer year);
 }

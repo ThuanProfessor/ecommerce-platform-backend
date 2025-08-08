@@ -47,6 +47,7 @@ public class CompanyController {
 
     @GetMapping("/companies/{companyId}")
     public String viewCompanyDetail(Model model, @PathVariable(value = "companyId") int id) {
+        model.addAttribute("users", this.userService.getUserByRoleSeller());
         model.addAttribute("company", this.companyService.getCompanyById(id));
         return "company-form";
     }

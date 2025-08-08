@@ -41,20 +41,19 @@ public class UserRepositoryImpl implements UserRepository {
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<User> q = b.createQuery(User.class);
 
-
         Root<User> root = q.from(User.class);
         q.select(root);
 
-        if(params != null){
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
 
             String kw = params.get("kw");
-            if(kw != null && !kw.isEmpty()){
+            if (kw != null && !kw.isEmpty()) {
                 predicates.add(b.like(root.get("username"), String.format("%%%s%%", kw)));;
             }
 
             String role = params.get("role");
-            if(role != null && !role.isEmpty()){
+            if (role != null && !role.isEmpty()) {
                 predicates.add(b.equal(root.get("role"), role));
             }
 
@@ -75,9 +74,9 @@ public class UserRepositoryImpl implements UserRepository {
 
         Query query = session.createQuery(q);
 
-        if(params != null){
+        if (params != null) {
             String page = params.get("page");
-            if(page != null){
+            if (page != null) {
                 int p = Integer.parseInt(page);
                 int pageSize = Integer.parseInt(params.getOrDefault("pageSize", "20"));
 
@@ -88,10 +87,8 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
 
-        return query.getResultList();        
+        return query.getResultList();
 
-
-       
     }
 
     @Override
@@ -145,7 +142,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         return user;
     }
-    
+
     @Override
     public List<User> getUser() {
         Session session = this.factory.getObject().getCurrentSession();
@@ -162,6 +159,25 @@ public class UserRepositoryImpl implements UserRepository {
         return q.getResultList();
     }
 
-   
+    @Override
+    public List<User> getUserNotVerified() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE isVerified=false");
+
+        return q.getResultList();
+    }
+
+    @Override
+    public Boolean updateIsVerified(int userId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            User user = s.get(User.class, userId);
+            user.setIsVerified(Boolean.TRUE);
+            s.merge(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
