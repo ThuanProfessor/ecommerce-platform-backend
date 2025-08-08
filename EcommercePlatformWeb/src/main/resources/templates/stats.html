@@ -9,8 +9,60 @@
     <div th:replace="base::header"></div>
 
     <main class="container">
-        <h1>Thống kê theo cửa hàng</h1>
 
+        <form th:action="@{/stats}" method="get" class="row g-3 align-items-center mb-4">
+            <div class="col-auto">
+                <label for="quarter" class="col-form-label">Quý</label>
+                <select id="quarter" name="quarter" class="form-select">
+                    <option value="">-- Tất cả quý --</option>
+                    <option value="1">Quý 1</option>
+                    <option value="2">Quý 2</option>
+                    <option value="3">Quý 3</option>
+                    <option value="4">Quý 4</option>
+                </select>
+            </div>
+
+            <div class="col-auto">
+                <label for="year" class="col-form-label">Năm</label>
+                <select id="year" name="year" class="form-select">
+                    <option value="">-- Tất cả năm --</option>
+                    <option th:each="y : ${years}" th:value="${y}" th:text="${y}"></option>
+                </select>
+            </div>
+
+            <div class="col-auto mt-4">
+                <button type="submit" class="btn btn-primary">Lọc thống kê</button>
+            </div>
+        </form>
+        
+        <h2>Thống kê doanh thu theo quý và năm của các cửa hàng</h2>
+        <div class="row">
+            <div class="col-md-5 col-6">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Quý</th>
+                            <th>Năm</th>
+                            <th>Tên cửa hàng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${statsRevenueAllStoreByQuarterAndYear}">
+                            <td th:text="${row[0]}"></td> <!-- Quý -->
+                            <td th:text="${row[1]}"></td> <!-- Năm -->
+                            <td th:text="${row[2]}"></td> <!-- Tên cửa hàng -->
+                            <td th:text="${#numbers.formatDecimal(row[3], 0, 'COMMA', 0, 'POINT')}"></td> <!-- Doanh thu -->
+                        </tr>
+                    </tbody>
+                </table>                              
+            </div>
+            <div class="col-md-7 col-6">
+                <canvas id="statsRevenueAllStoreByQuarterAndYear"></canvas>
+            </div>
+        </div>
+
+        <h1>Thống kê theo cửa hàng</h1>
         <div class="row">
             <div class="col-md-5 col-6">
                 <table class="table">
@@ -30,6 +82,52 @@
                 <canvas id="statsRevenueByStoreChart"></canvas>
             </div>
         </div>
+
+        <h1>Thống kê theo tháng</h1>
+        <form th:action="@{/stats}" method="get" class="row g-3 align-items-center mb-4">
+            <div class="col-auto">
+                <label for="month" class="col-form-label">Tháng</label>
+                <select id="month" name="month" class="form-select">
+                    <option value="">-- Tất cả tháng --</option>
+                    <option th:each="m : ${#numbers.sequence(1,12)}"
+                            th:value="${m}"
+                            th:text="${m}"></option>
+                </select>
+            </div>
+            <div class="col-auto mt-4">
+                <button type="submit" class="btn btn-primary">Lọc thống kê</button>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Năm</th>
+                            <th>Tháng</th>
+                            <th>Mã cửa hàng</th>
+                            <th>Tên cửa hàng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${statsRevenueAllStoreByMonth}">
+                            <td th:text="${row[0]}"></td> <!-- Năm -->
+                            <td th:text="${row[1]}"></td> <!-- tháng -->
+                            <td th:text="${row[2]}"></td> <!-- mã cửa hàng -->
+                            <td th:text="${row[3]}"></td> <!-- tên cửa hàng -->
+                            <td th:text="${#numbers.formatDecimal(row[4], 0, 'COMMA', 0, 'POINT')}"></td> <!-- doanh thu -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <canvas id="statsRevenueAllStoreByStoreChart" style="width: 100%; height: 400px;"></canvas>
+            </div>
+        </div>
+
+
         <h1>Thống kê sản phẩm</h1>
         <div class="row">
             <div class="col-md-5 col-6">
@@ -84,15 +182,15 @@
                 <th>Doanh thu</th>
 
             </tr>
-                <tr th:each="row : ${byMonth}">
+            <tr th:each="row : ${byMonth}">
                 <td th:text="${row[0]}"></td>
                 <td th:text="${row[1]}"></td>
                 <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}"></td>
             </tr>
         </table>
         <div class="col-md-7 col-6">
-                <canvas id="statsMonthByChart"></canvas>
-            </div>
+            <canvas id="statsMonthByChart"></canvas>
+        </div>
 
         <h2>Thống kê doanh thu theo quý</h2>
         <table>
@@ -108,8 +206,8 @@
             </tr>
         </table>
         <div class="col-md-7 col-6">
-                <canvas id="statsYearByChart"></canvas>
-            </div>
+            <canvas id="statsYearByChart"></canvas>
+        </div>
 
         <h2>Thống kê doanh thu theo năm</h2>
         <table>
@@ -123,8 +221,8 @@
             </tr>
         </table>
         <div class="col-md-7 col-6">
-                <canvas id="statsCharterByChart"></canvas>
-            </div>
+            <canvas id="statsCharterByChart"></canvas>
+        </div>
 
     </main>
 
@@ -134,7 +232,60 @@
 
     <script th:inline="javascript">
         window.onload = function () {
-        let stats = [[${productRevenues}]];
+            
+            let statsRevenueAllStoreByQuarterAndYear = [[${statsRevenueAllStoreByQuarterAndYear}]];
+            if (statsRevenueAllStoreByQuarterAndYear != null) {
+                let data2 = statsRevenueAllStoreByQuarterAndYear.map(o => o[3]);
+                let Chart2labels = statsRevenueAllStoreByQuarterAndYear.map(o => o[2] + " - Quý " + o[0] + " - " + o[1]);
+                const ctxChart1 = document.getElementById('statsRevenueAllStoreByQuarterAndYear');
+                new Chart(ctxChart1, {
+                type: 'bar',
+                        data: {
+                        labels: Chart2labels,
+                                datasets: [{
+                                label: '# Doanh thu',
+                                        data: data2,
+                                        borderWidth: 1
+                                }]
+                        },
+                        options: {
+                        scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                        }
+                        }
+                });
+            }            
+            
+            
+            let statsRevenueAllStoreByStore = [[${statsRevenueAllStoreByMonth}]];
+            if (statsRevenueAllStoreByStore != null) {
+                let data1 = statsRevenueAllStoreByStore.map(o => o[4]);
+                let Chartlabels = statsRevenueAllStoreByStore.map(o => o[3] + " - tháng " + o[1] + " - " + o[0]);
+                const ctxChart = document.getElementById('statsRevenueAllStoreByStoreChart');
+                new Chart(ctxChart, {
+                type: 'bar',
+                        data: {
+                        labels: Chartlabels,
+                                datasets: [{
+                                label: '# Doanh thu',
+                                        data: data1,
+                                        borderWidth: 1
+                                }]
+                        },
+                        options: {
+                        scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                        }
+                        }
+                });
+            }
+
+            let stats = [[${productRevenues}
+        ]];
         let data = stats.map(o => o[2]);
         let labels = stats.map(o => o[1]);
         const ctx = document.getElementById('myChart');
@@ -156,7 +307,8 @@
                 }
                 }
         });
-        let statsCategory = [[${statsCategoryByCountProduct}]];
+                    let statsCategory = [[${statsCategoryByCountProduct}
+        ]];
         let cateLabels = statsCategory.map(c => c[1]);
         let cateData = statsCategory.map(c => c[2]);
         const ctx2 = document.getElementById('categoryChart');
@@ -184,7 +336,8 @@
                 responsive: true
                 }
         });
-        let statsStore = [[${statsRevenueByStore}]];
+                    let statsStore = [[${statsRevenueByStore}
+        ]];
         let storeLabels = statsStore.map(s => s[1]);
         let revenueStoreData = statsStore.map(s => s[2]);
         const ctx3 = document.getElementById('statsRevenueByStoreChart');
@@ -206,80 +359,74 @@
                 }
                 }
         });
-
-               let statsMonth = [[${byMonth}]];
+        let statsMonth = [[${byMonth}
+        ]];
         let monthLabels = statsMonth.map(row => row[1] + '-' + row[0]);
         let monthData = statsMonth.map(row => row[2]);
         const ctxMonth = document.getElementById('statsMonthByChart');
         new Chart(ctxMonth, {
-            type: 'bar',
-            data: {
+        type: 'bar',
+                data: {
                 labels: monthLabels,
-                datasets: [{
-                    label: 'Doanh thu theo tháng',
-                    data: monthData,
-                    backgroundColor: '#3498db'
-                }]
-            },
-            options: {
+                        datasets: [{
+                        label: 'Doanh thu theo tháng',
+                                data: monthData,
+                                backgroundColor: '#3498db'
+                        }]
+                },
+                options: {
                 responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true }
+                        plugins: { legend: { display: false } },
+                        scales: {
+                        y: { beginAtZero: true }
+                        }
                 }
-            }
         });
-
-
-
         let statsQuarter = [[${byQuarter}]];
         let quarterLabels = statsQuarter.map(row => 'Q' + row[0] + '-' + row[1]);
         let quarterData = statsQuarter.map(row => row[2]);
         const ctxQuarter = document.getElementById('statsYearByChart');
         new Chart(ctxQuarter, {
-            type: 'bar',
-            data: {
+        type: 'bar',
+                data: {
                 labels: quarterLabels,
-                datasets: [{
-                    label: 'Doanh thu theo quý',
-                    data: quarterData,
-                    backgroundColor: '#e67e22'
-                }]
-            },
-            options: {
+                        datasets: [{
+                        label: 'Doanh thu theo quý',
+                                data: quarterData,
+                                backgroundColor: '#e67e22'
+                        }]
+                },
+                options: {
                 responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true }
+                        plugins: {legend: {display: false}},
+                        scales: {
+                        y: {beginAtZero: true}
+                        }
                 }
-            }
         });
-
         //
         let statsYear = [[${byYear}]];
         let yearLabels = statsYear.map(row => row[0]);
         let yearData = statsYear.map(row => row[1]);
         const ctxYear = document.getElementById('statsCharterByChart');
         new Chart(ctxYear, {
-            type: 'bar',
-            data: {
+        type: 'bar',
+                data: {
                 labels: yearLabels,
-                datasets: [{
-                    label: 'Doanh thu theo năm',
-                    data: yearData,
-                    backgroundColor: '#2ecc71'
-                }]
-            },
-            options: {
+                        datasets: [{
+                        label: 'Doanh thu theo năm',
+                                data: yearData,
+                                backgroundColor: '#2ecc71'
+                        }]
+                },
+                options: {
                 responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true }
+                        plugins: {legend: {display: false}},
+                        scales: {
+                        y: {beginAtZero: true}
+                        }
                 }
-            }
         });
-
-
         }
     </script>
 </body>

@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductRepositotyImpl implements ProductRepository {
 
     // Phân trang: 20 sản phẩm/trang
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 4;
 
     @Autowired
     private LocalSessionFactoryBean factory;

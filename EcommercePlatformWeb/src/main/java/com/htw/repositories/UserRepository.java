@@ -18,7 +18,12 @@ public interface UserRepository {
     User addOrUpdateUserInfo(User user);
 
     List<User> getUsers(Map<String, String> params);
+
     List<User> getUser();
+
+    List<User> getUserNotVerified();
+
+    Boolean updateIsVerified(int userId);
 
     List<User> getUserByRoleSeller();
 

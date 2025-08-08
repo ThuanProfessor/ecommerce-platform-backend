@@ -11,10 +11,6 @@
 
     <h1 class="mt-2 text-center">Danh sách các cửa hàng</h1>
 
-    
-
-
-
     <div class="container mt-4">
         <h1 class="text-center text-primary mb-4">Danh sách cửa hàng</h1>
 
@@ -57,7 +53,7 @@
                             <td th:text="${store.name}"></td>
                             <td th:text="${store.description}"></td>
                             <td class="text-center" th:text="${#dates.format(store.createdDate, 'dd-MM-yyyy')}"></td>
-                            <td th:text="${store.userId.username}"></td>
+                            <td th:text="${store.userId.username} + ' (' +${store.userId.fullName} + ')' "></td>
                             <td class="text-center">
                                 <a th:href="@{'/stores/' + ${store.id}}" class="btn btn-sm btn-primary me-1">Sửa</a>
                                 <a th:href="@{/stores/delete/{id}(id=${store.id})}" class="btn btn-sm btn-danger">Xoá</a>
@@ -66,12 +62,8 @@
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
-
-        <a th:href="@{/stores/add}" class="btn btn-success mt-2">Thêm cửa hàng</a>
-
-
 
     </div>
 

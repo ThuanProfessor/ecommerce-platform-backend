@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getUser() {
         return this.userRepository.getUser();
     }
-    
+
     @Override
     public List<User> getUsers(Map<String, String> params) {
         return this.userRepository.getUsers(params);
@@ -73,9 +73,8 @@ public class UserServiceImpl implements UserService {
         u.setFullName(params.get("fullname"));
         u.setNumberPhone(params.get("number_phone"));
 
-        
         u.setRole(params.get("role") != null ? params.get("role") : "ROLE_USER");
-        
+
         // if (!avatar.isEmpty()) {
         //     try {
         //         Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -84,11 +83,6 @@ public class UserServiceImpl implements UserService {
         //         Logger.getLogger(Us(erServiceImpl.class.getName()).logLevel.SEVERE, null, ex);
         //     }
         // }
-
-
-
-
-        
         if (params.get("role").equals("ROLE_CUSTOMER")) {
             u.setIsVerified(Boolean.TRUE);
         } else {
@@ -105,14 +99,13 @@ public class UserServiceImpl implements UserService {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    
-   
+
         if (params.get("is_verified") != null) {
             u.setIsVerified("1".equals(params.get("is_verified")));
         }
 
         return this.userRepository.addUser(u);
-    
+
     }
 
     @Override
@@ -163,5 +156,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUserByRoleSeller() {
         return this.userRepository.getUserByRoleSeller();
+    }
+
+    @Override
+    public List<User> getUserNotVerified() {
+        return this.userRepository.getUserNotVerified();
+    }
+
+    @Override
+    public Boolean updateIsVerified(int userId) {
+        return this.userRepository.updateIsVerified(userId);
     }
 }

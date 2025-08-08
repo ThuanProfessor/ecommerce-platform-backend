@@ -12,6 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CompanyService {
 
     List<Company> listCompany();
+    
+    Company getCompanyById(int id);
+
+    Company getCompanyByUsername();
 
     Company addOrUpdateCompany(Map<String, String> params, MultipartFile avatar);
+
+    Company addOrUpdateCompany(Company company);
 }

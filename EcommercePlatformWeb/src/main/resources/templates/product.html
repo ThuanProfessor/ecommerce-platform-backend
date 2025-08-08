@@ -8,7 +8,7 @@
 
     <div th:replace="base :: header"></div>  
 
-    <div class="container text-center">
+    <div class="container-fluid text-center">
         <h1 class="mt-2">QUẢN LÝ SẢN PHẨM</h1>
         <p>Bạn có thể thêm sản phẩm mới hoặc chỉnh sửa thông tin của sản phẩm</p>
 
@@ -47,7 +47,9 @@
             </div>
         </form>
 
-        <div class="container mt-4">
+        <a th:href="@{/products/add}" class="btn btn-success mt-2">➕ Thêm sản phẩm</a>
+
+        <div class="container-fluid mt-4">
             <div id="content">
                 <div th:if="${products}" class="row">
                     <table class="table">
@@ -82,7 +84,6 @@
 
                 </div>
             </div>
-            <a th:href="@{/products/add}" class="btn btn-success mt-2">➕ Thêm sản phẩm</a>
         </div>
     </div>
 

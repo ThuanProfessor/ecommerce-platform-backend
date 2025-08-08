@@ -14,14 +14,11 @@
             <p>Đây là trang quản lý các danh mục của Open Mall</p>
             <p>Bạn có thể <strong>thêm</strong> danh mục mới hoặc <strong>chỉnh sửa/xoá</strong> danh mục hiện tại</p>
         </div>
-       
+
+        <a th:href="@{/categories/add}" class="btn btn-success mt-2">Thêm danh mục</a>
+
         <div id="content" th:fragment="content">
             <div th:if="${categories}" class="row">
-
-
-
-
-
                 <table class="table">
                     <thead>
                         <tr>
@@ -47,7 +44,6 @@
                 </table>
             </div>
         </div>
-         <a th:href="@{/categories/add}" class="btn btn-success mt-2">Thêm danh mục</a>
     </div>
 
 
