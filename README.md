@@ -6,28 +6,28 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
 
 ---
 
-## 📌 Features
+##  Features
 
-### 🔐 Authentication & Roles
+###  Authentication & Roles
 - User registration (buyer, vendor: individual or company)
 - Avatar upload on signup
 - Role-based login (Admin, Staff, Seller, User)
 - Manual seller approval by system staff
 
-### 🛍️ Product & Store Management
+###  Product & Store Management
 - Seller dashboard to manage stores and products
 - Each product includes name, price, image, category, etc.
 
-### 🔎 Product Browsing & Search
+###  Product Browsing & Search
 - Filter products by name, price, store
 - Sort by name or price
 - Pagination (20 products per page)
 
-### 💬 Reviews & Ratings
+###  Reviews & Ratings
 - Product and seller reviews (1–5 stars + comment)
 - Reply to comments
 
-### 💳 Order & Payments
+###  Order & Payments
 - Cash on Delivery or Online Payment via:
   - PayPal
   - Stripe
@@ -35,17 +35,17 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
   - MoMo
 - All transactions are recorded
 
-### 📊 Statistics & Reports
+###  Statistics & Reports
 - Seller revenue by month, quarter, year
 - Admin analytics: total products, sales frequency per store
 
-### 🧠 Smart Features
+###  Smart Features
 - Product comparison across stores
 - Real-time chat via Firebase
 
 ---
 
-## 🏗️ Tech Stack
+##  Tech Stack
 
 | Layer        | Technology                      |
 |--------------|----------------------------------|
@@ -59,19 +59,19 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 
 ---
 
-## ⚙️ Getting Started
+##  Getting Started
 
-### 🔧 Prerequisites
+###  Prerequisites
 - Java 17+
 - Maven 3.8+
 - MySQL Server (8+)
 
-### 🔑 Setup Environment
+###  Setup Environment
 
 1. Clone the repository:
 ```bash
@@ -79,7 +79,7 @@ git clone https://github.com/ThuanProfessor/ecommerce-platform-backend.git
 cd ecommerce-platform-backend
 ```
 
-## 👥 Contributors
+##  Contributors
 
 <table>
   <tr>
@@ -98,7 +98,7 @@ cd ecommerce-platform-backend
   </tr>
 </table>
 
-## 📝 License
+##  License
 
 This project is licensed under multiple open source licenses:
 
@@ -106,7 +106,7 @@ This project is licensed under multiple open source licenses:
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-## 📞 Support
+##  Support
 
 For support and inquiries, please contact:
 - 📧 Email: [2251050029hau@ou.edu.vn](mailto:2251050029hau@ou.edu.vn)
