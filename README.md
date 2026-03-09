@@ -1,4 +1,4 @@
-# 🛒 Ecommerce-Platform-Backend
+#  Ecommerce-Platform-Backend
 
 This is the backend service for the **Ecommerce Platform** project — a multi-vendor e-commerce platform where users can register, browse, purchase, and review products from various sellers.
 
