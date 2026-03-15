@@ -92,7 +92,7 @@ cd ecommerce-platform-backend
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/anhhao247">
+      <a href="https://github.com/trunghau810">
         <img src="https://github.com/trunghau810.png" width="100" height="100" style="border-radius: 50%; object-fit: cover;"><br>
         <sub><b>Trung Hau</b></sub>
       </a>
