@@ -33,6 +33,7 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
   - Stripe
   - ZaloPay
   - MoMo
+  - VNPay
 - All transactions are recorded
 
 ###  Statistics & Reports
@@ -67,7 +68,7 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
 ##  Getting Started
 
 ###  Prerequisites
-- Java 17+
+- Java 21+
 - Maven 3.8+
 - MySQL Server (8+)
 - Git - Github
