@@ -70,6 +70,8 @@ This is the backend service for the **Ecommerce Platform** project — a multi-v
 - Java 17+
 - Maven 3.8+
 - MySQL Server (8+)
+- Git - Github
+- IDE Build Maven
 
 ###  Setup Environment
 
