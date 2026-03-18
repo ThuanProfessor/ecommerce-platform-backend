@@ -7,7 +7,7 @@ function deleteStore(endpoint, id) {
                 alert("Xóa thành công!");
                 location.reload();
             } else 
-                alert("Có lỗi xảy ra!");
+                alert("Xoá không thành công!");
         });
     }
 }
